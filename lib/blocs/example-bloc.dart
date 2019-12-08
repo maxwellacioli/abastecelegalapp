@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/services.dart';
-import 'package:abastecelegalapp/models/contact.dart';
+import 'package:abastecelegalapp/models/user.dart';
 import 'package:flutter/material.dart';
 
 class ExampleBloc {
