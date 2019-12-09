@@ -115,6 +115,11 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Image.asset(
+                  'assets/images/gas-station.png',
+                  width: 100.0,
+                  height: 100.0,
+                ),
                 SizedBox(height: 45.0),
                 usernameField,
                 SizedBox(height: 25.0),
