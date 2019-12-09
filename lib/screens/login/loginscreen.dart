@@ -25,6 +25,23 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final signUpText = Text.rich(
+      TextSpan(
+        text: 'New user? ',
+        style: TextStyle(fontSize: 16),
+        children: <TextSpan>[
+          TextSpan(
+              text: 'SignUp',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue
+              )),
+          // can add more TextSpans here...
+        ],
+      ),
+    );
+
     //Username Fiel
     final usernameField = TextField(
       obscureText: false,
@@ -99,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 15.0,
                 ),
+                signUpText
               ],
             ),
           ),
