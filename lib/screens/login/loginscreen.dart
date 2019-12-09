@@ -20,26 +20,35 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   @override
   Widget build(BuildContext context) {
-    final signUpText = Text.rich(
-      TextSpan(
-        text: 'New user? ',
-        style: TextStyle(fontSize: 16),
-        children: <TextSpan>[
-          TextSpan(
-              text: 'SignUp',
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue
-              )),
-          // can add more TextSpans here...
-        ],
-      ),
+    final newUserText = Text('Novo Usuário? ',
+        style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,));
+
+    final signUpText = GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ExScreen2()));
+      },
+      child: Text("Registrar",
+          style: TextStyle(
+              fontSize: 16,
+              decoration: TextDecoration.underline,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue)),
+    );
+
+    final signUp = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        newUserText,
+        signUpText
+      ],
     );
 
     //Username Fiel
@@ -50,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Username",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
     //Password Field
@@ -61,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Password",
           border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
     final loginButon = Material(
@@ -72,10 +81,10 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ExScreen2()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ExScreen2()));
         },
-        child: Text("Login",
+        child: Text("Entrar",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -116,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 15.0,
                 ),
-                signUpText
+                signUp
               ],
             ),
           ),
