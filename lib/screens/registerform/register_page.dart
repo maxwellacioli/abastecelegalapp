@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:abastecelegalapp/screens/registerform/register_form.dart';
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cadastrar'),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
+      body: const SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+          child: RegisterForm(),
+        ),
+      ),
+    );
+  }
+}

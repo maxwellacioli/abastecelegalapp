@@ -1,4 +1,4 @@
-import 'package:abastecelegalapp/screens/example2/examplescreen2.dart';
+import 'package:abastecelegalapp/screens/registerform/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -32,9 +32,9 @@ class _LoginPageState extends State<LoginPage> {
     final signUpText = GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ExScreen2()));
+            context, MaterialPageRoute(builder: (context) => RegisterPage()));
       },
-      child: Text("Registrar",
+      child: Text("Cadastrar",
           style: TextStyle(
               fontSize: 16,
               decoration: TextDecoration.underline,
@@ -81,8 +81,9 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ExScreen2()));
+          print('I was pressed!');
+//          Navigator.push(
+//              context, MaterialPageRoute(builder: (context) => ExScreen2()));
         },
         child: Text("Entrar",
             textAlign: TextAlign.center,
