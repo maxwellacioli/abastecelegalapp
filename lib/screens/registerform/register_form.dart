@@ -39,14 +39,49 @@ class _RegisterFormState extends State<RegisterForm> {
               }
             },
           ),
+          const SizedBox(height: 16.0),
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Sobrenome',
+            ),
+            validator: (String value) {
+              if (value.trim().isEmpty) {
+                return 'Surname is required';
+              }
+            },
+          ),
+          const SizedBox(height: 16.0),
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Email',
+            ),
+            validator: (String value) {
+              if (value.trim().isEmpty) {
+                return 'Email is required';
+              } else if(!validEmail(value)) {
+                return 'Invalid email format';
+              }
+              print(value);
+            },
+          ),
+          const SizedBox(height: 16.0),
+          TextFormField(
+            decoration: const InputDecoration(
+              labelText: 'Password',
+            ),
+            validator: (String value) {
+              if (value.trim().isEmpty) {
+                return 'Password is required';
+              }
+            },
+          ),
+          const SizedBox(height: 16.0),
           Row(
             children: <Widget>[
               const Spacer(),
               MaterialButton(
                 color: Colors.blue,
-                onPressed: () {
-                  print('I was registered!');
-                },
+                onPressed: _submit,
                 child: Text("Cadastrar",
                     textAlign: TextAlign.center,
                     style: style.copyWith(
@@ -62,5 +97,10 @@ class _RegisterFormState extends State<RegisterForm> {
   void _submit() {
     _formKey.currentState.validate();
     print('Form submitted');
+  }
+
+  bool validEmail(String email) {
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
   }
 }
