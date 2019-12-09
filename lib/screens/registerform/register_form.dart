@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:abastecelegalapp/screens/login/loginscreen.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key key}) : super(key: key);
@@ -78,6 +79,16 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           Row(
             children: <Widget>[
+              MaterialButton(
+                color: Colors.blue,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Voltar",
+                    textAlign: TextAlign.center,
+                    style: style.copyWith(
+                        color: Colors.white)),
+              ),
               const Spacer(),
               MaterialButton(
                 color: Colors.blue,
