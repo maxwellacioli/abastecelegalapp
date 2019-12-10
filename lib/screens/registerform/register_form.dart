@@ -20,6 +20,7 @@ class _RegisterFormState extends State<RegisterForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            autofocus: true,
             decoration: const InputDecoration(
               labelText: 'Nome',
               hintText: 'Nome'

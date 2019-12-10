@@ -26,8 +26,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final newUserText = Text('Novo Usuário? ',
         style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,));
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ));
 
     final signUpText = GestureDetector(
       onTap: () {
@@ -45,10 +46,7 @@ class _LoginPageState extends State<LoginPage> {
     final signUp = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        newUserText,
-        signUpText
-      ],
+      children: <Widget>[newUserText, signUpText],
     );
 
     //Username Fiel
@@ -108,32 +106,34 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/gas-station.png',
-                  width: 100.0,
-                  height: 100.0,
-                ),
-                SizedBox(height: 45.0),
-                usernameField,
-                SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                loginButon,
-                SizedBox(
-                  height: 15.0,
-                ),
-                signUp
-              ],
+        child: new SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/gas-station.png',
+                    width: 100.0,
+                    height: 100.0,
+                  ),
+                  SizedBox(height: 45.0),
+                  usernameField,
+                  SizedBox(height: 25.0),
+                  passwordField,
+                  SizedBox(
+                    height: 35.0,
+                  ),
+                  loginButon,
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  signUp
+                ],
+              ),
             ),
           ),
         ),
