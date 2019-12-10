@@ -22,6 +22,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
+  final FocusNode _passwordFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     final newUserText = Text('Novo Usuário? ',
@@ -51,8 +53,12 @@ class _LoginPageState extends State<LoginPage> {
 
     //Username Fiel
     final usernameField = TextField(
+      autofocus: true,
       obscureText: false,
       style: style,
+      onSubmitted: (v){
+        FocusScope.of(context).requestFocus(_passwordFocus);
+      },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Username",
@@ -64,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
     final passwordField = TextField(
       obscureText: true,
       style: style,
+      focusNode: _passwordFocus,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Password",
