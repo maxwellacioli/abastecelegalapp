@@ -1,5 +1,9 @@
+import 'package:abastecelegalapp/models/user.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -35,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     final signUpText = GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RegisterPage()));
+            context, CupertinoPageRoute(builder: (context) => RegisterPage()));
       },
       child: Text("Cadastrar",
           style: TextStyle(
@@ -56,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
       autofocus: true,
       obscureText: false,
       style: style,
-      onSubmitted: (v){
+      onSubmitted: (v) {
         FocusScope.of(context).requestFocus(_passwordFocus);
       },
       decoration: InputDecoration(
@@ -87,6 +91,15 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           print('I was pressed!');
+          http
+              .get(
+            'https://api.github.com/users/jandersoncrb',
+          )
+              .then((http.Response r) {
+            Map bodyDecoded = jsonDecode(r.body);
+            print(bodyDecoded.runtimeType);
+            User user = User.fromJson(bodyDecoded);
+          });
 //          Navigator.push(
 //              context, MaterialPageRoute(builder: (context) => ExScreen2()));
         },

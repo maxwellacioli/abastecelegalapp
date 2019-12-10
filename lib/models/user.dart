@@ -15,7 +15,7 @@ class User {
     this.password = password;
   }
 
-  User.froJson(Map json)
+  User.fromJson(Map json)
     :
       id = json['id'],
       username = json['username'],
