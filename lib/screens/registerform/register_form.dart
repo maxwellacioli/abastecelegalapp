@@ -21,18 +21,8 @@ class _RegisterFormState extends State<RegisterForm> {
         children: <Widget>[
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'Username',
-            ),
-            validator: (String value) {
-              if (value.trim().isEmpty) {
-                return 'Username is required';
-              }
-            },
-          ),
-          const SizedBox(height: 16.0),
-          TextFormField(
-            decoration: const InputDecoration(
-              labelText: 'Name',
+              labelText: 'Nome',
+              hintText: 'Nome'
             ),
             validator: (String value) {
               if (value.trim().isEmpty) {
@@ -44,6 +34,7 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFormField(
             decoration: const InputDecoration(
               labelText: 'Sobrenome',
+              hintText: 'Sobrenome'
             ),
             validator: (String value) {
               if (value.trim().isEmpty) {
@@ -54,13 +45,14 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'Email',
+              labelText: 'E-mail',
+              hintText: 'examplo@email.com'
             ),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Email is required';
               } else if(!validEmail(value)) {
-                return 'Invalid email format';
+                return 'Invalid e-mail format';
               }
               print(value);
             },
@@ -68,7 +60,20 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           TextFormField(
             decoration: const InputDecoration(
+              labelText: 'Username',
+              hintText: 'Username'
+            ),
+            validator: (String value) {
+              if (value.trim().isEmpty) {
+                return 'Username is required';
+              }
+            },
+          ),
+          const SizedBox(height: 16.0),
+          TextFormField(
+            decoration: const InputDecoration(
               labelText: 'Password',
+              hintText: 'Password'
             ),
             validator: (String value) {
               if (value.trim().isEmpty) {
