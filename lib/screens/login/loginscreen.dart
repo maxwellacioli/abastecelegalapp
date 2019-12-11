@@ -1,21 +1,10 @@
-import 'package:abastecelegalapp/models/user.dart';
+import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -82,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final loginButon = Material(
+    final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Color(0xff01A0C7),
@@ -90,18 +79,8 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          print('I was pressed!');
-          http
-              .get(
-            'https://api.github.com/users/jandersoncrb',
-          )
-              .then((http.Response r) {
-            Map bodyDecoded = jsonDecode(r.body);
-            print(bodyDecoded.runtimeType);
-            User user = User.fromJson(bodyDecoded);
-          });
-//          Navigator.push(
-//              context, MaterialPageRoute(builder: (context) => ExScreen2()));
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => HomePage()));
         },
         child: Text("Entrar",
             textAlign: TextAlign.center,
@@ -147,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 35.0,
                   ),
-                  loginButon,
+                  loginButton,
                   SizedBox(
                     height: 15.0,
                   ),

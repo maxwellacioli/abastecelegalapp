@@ -21,10 +21,8 @@ class _RegisterFormState extends State<RegisterForm> {
         children: <Widget>[
           TextFormField(
             autofocus: true,
-            decoration: const InputDecoration(
-              labelText: 'Nome',
-              hintText: 'Nome'
-            ),
+            decoration:
+                const InputDecoration(labelText: 'Nome', hintText: 'Nome'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Name name is required';
@@ -34,9 +32,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'Sobrenome',
-              hintText: 'Sobrenome'
-            ),
+                labelText: 'Sobrenome', hintText: 'Sobrenome'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Surname is required';
@@ -46,13 +42,11 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'E-mail',
-              hintText: 'examplo@email.com'
-            ),
+                labelText: 'E-mail', hintText: 'examplo@email.com'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Email is required';
-              } else if(!validEmail(value)) {
+              } else if (!validEmail(value)) {
                 return 'Invalid e-mail format';
               }
               print(value);
@@ -61,9 +55,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'Username',
-              hintText: 'Username'
-            ),
+                labelText: 'Username', hintText: 'Username'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Username is required';
@@ -73,9 +65,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 16.0),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: 'Password',
-              hintText: 'Password'
-            ),
+                labelText: 'Password', hintText: 'Password'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Password is required';
@@ -92,8 +82,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
                 child: Text("Voltar",
                     textAlign: TextAlign.center,
-                    style: style.copyWith(
-                        color: Colors.white)),
+                    style: style.copyWith(color: Colors.white)),
               ),
               const Spacer(),
               MaterialButton(
@@ -101,8 +90,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 onPressed: _submit,
                 child: Text("Cadastrar",
                     textAlign: TextAlign.center,
-                    style: style.copyWith(
-                        color: Colors.white)),
+                    style: style.copyWith(color: Colors.white)),
               ),
             ],
           ),
@@ -117,7 +105,8 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   bool validEmail(String email) {
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
   }
 }
