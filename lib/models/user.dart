@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:abastecelegalapp/models/vehicle.dart';
 
 class User {
   int id;
@@ -6,6 +6,7 @@ class User {
   String name;
   String email;
   String password;
+  List<Vehicle> vehicles;
 
   User(int id, String username, String name, String email, String password) {
     this.id = id;
@@ -13,6 +14,8 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
+
+    this.vehicles = [];
   }
 
   User.fromJson(Map json)
