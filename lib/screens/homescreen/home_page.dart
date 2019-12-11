@@ -1,4 +1,6 @@
-import 'package:abastecelegalapp/screens/homescreen/components/body.dart';
+import 'package:abastecelegalapp/screens/profilescreen/profile_page.dart';
+import 'package:abastecelegalapp/screens/tripscreen/trip_page.dart';
+import 'package:abastecelegalapp/screens/vehiclescreen/vehicle_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,6 +13,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
+  final List<Widget> _children = [
+    VehiclePage(),
+    TripPage(),
+    ProfilePage()
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -20,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

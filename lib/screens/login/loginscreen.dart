@@ -46,7 +46,6 @@ class _LoginPageState extends State<LoginPage> {
 
     //Username Fiel
     final usernameField = TextField(
-      autofocus: true,
       obscureText: false,
       style: style,
       onSubmitted: (v) {
@@ -80,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           Navigator.push(
-              context, CupertinoPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Text("Entrar",
             textAlign: TextAlign.center,
