@@ -9,6 +9,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,9 @@ class _HomePageState extends State<HomePage> {
             title: Text('Perfil'),
           ),
         ],
+        currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
