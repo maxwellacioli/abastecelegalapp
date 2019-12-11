@@ -1,7 +1,10 @@
+import 'package:abastecelegalapp/models/user.dart';
+import 'package:abastecelegalapp/provs/user_model.dart';
 import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -12,13 +15,34 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+
+
 class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   final FocusNode _passwordFocus = FocusNode();
 
+  void setCurrentUser() {
+    User user = new User(1, 'maxwell', 'Maxwell', 'maxwell.acioli@gmail.com', '');
+
+    final userModel = Provider.of<UserModel>(context);
+    userModel.setUser(user);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(milliseconds: 100)).then((_) {
+      setCurrentUser();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
     final newUserText = Text('Novo Usuário? ',
         style: TextStyle(
           fontSize: 16,
@@ -129,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 15.0,
                   ),
-                  signUp
+                  signUp,
                 ],
               ),
             ),

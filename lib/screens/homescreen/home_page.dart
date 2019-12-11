@@ -11,13 +11,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
 
   final List<Widget> _children = [
     VehiclePage(),
     TripPage(),
     ProfilePage()
   ];
+
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {

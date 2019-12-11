@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       child:
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Abastece Legal',
         theme: buildThemeData(),
         home: LoginPage(
           title: 'Abastece Legal',
