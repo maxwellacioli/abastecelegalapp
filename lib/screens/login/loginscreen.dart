@@ -22,29 +22,19 @@ class _LoginPageState extends State<LoginPage> {
 
   final FocusNode _passwordFocus = FocusNode();
 
-  void setCurrentUser() {
-    User user = new User(1, 'maxwell', 'Maxwell', 'maxwell.acioli@gmail.com', '');
-
-    final userModel = Provider.of<UserModel>(context, listen: false);
-    userModel.setUser(user);
-  }
-
   @override
   void initState() {
     super.initState();
 
     Future.delayed(Duration(milliseconds: 100)).then((_) {
-      setCurrentUser();
+      User user = new User(1, 'maxwell', 'Maxwell', 'maxwell.acioli@gmail.com', '');
+      final userModel = Provider.of<UserModel>(context, listen: false);
+      userModel.setUser(user);
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
-    setCurrentUser();
-
     final newUserText = Text('Novo Usuário? ',
         style: TextStyle(
           fontSize: 16,
