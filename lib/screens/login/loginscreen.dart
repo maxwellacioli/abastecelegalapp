@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           if(_formKey.currentState.validate()) {
-            _login(_username.text, _password.text);
+            _login(_username.text.trim(), _password.text);
           }
 //          Navigator.pushReplacement(
 //              context, MaterialPageRoute(builder: (context) => HomePage()));
