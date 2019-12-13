@@ -56,7 +56,7 @@ class Body extends StatelessWidget {
                       ]),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 15.0),
+                      padding: EdgeInsets.only(top: 25.0),
                       child: new Text(
                         userModel.getUser().username,
                         style: TextStyle(
@@ -71,16 +71,14 @@ class Body extends StatelessWidget {
               new Container(
                 color: Colors.white,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 25.0),
+                  padding: EdgeInsets.only(top: 50.0),
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 50.0, right: 25.0, top: 25.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
+                      Center(
+                        child: Container(
+                          child: Column(
                             children: <Widget>[
                               new Text(
                                 'Nome',
@@ -88,66 +86,69 @@ class Body extends StatelessWidget {
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.0),
-                                child: new Text(
-                                  userModel.getUser().name,
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              new Text(
+                                userModel.getUser().name,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )),
+                          ),
+                        ),
+                      ),
                       Padding(
                           padding: EdgeInsets.only(
-                              left: 50.0, right: 25.0, top: 25.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
+                              left: 30.0, right: 30.0, top: 25.0, bottom: 25.0),
+                          child: Divider()
+                      ),
+                      Center(
+                        child: Container(
+                          child: Column(
                             children: <Widget>[
                               new Text(
-                                'E-mail',
+                                'Email',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.0),
-                                child: new Text(
-                                  userModel.getUser().email,
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              new Text(
+                                userModel.getUser().email,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )),
+                          ),
+                        ),
+                      ),
                       Padding(
                           padding: EdgeInsets.only(
-                              left: 50.0, right: 25.0, top: 25.0),
-                          child: new Row(
-                            mainAxisSize: MainAxisSize.max,
+                              left: 30.0, right: 30.0, top: 25.0, bottom: 25.0),
+                          child: Divider()
+                      ),
+                      Center(
+                        child: Container(
+                          child: Column(
                             children: <Widget>[
                               new Text(
-                                'Veículo Principal',
+                                'Veiculo Principal',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 30.0),
-                                child: new Text(
-                                  'ABC1234',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              new Text(
+                                'ABC1234',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
