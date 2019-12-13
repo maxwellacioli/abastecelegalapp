@@ -1,7 +1,10 @@
+import 'package:abastecelegalapp/models/login_data.dart';
+import 'package:abastecelegalapp/models/token_data.dart';
 import 'package:abastecelegalapp/models/user.dart';
 import 'package:abastecelegalapp/provs/user_model.dart';
 import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
+import 'package:abastecelegalapp/services/auth_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +24,15 @@ class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   final FocusNode _passwordFocus = FocusNode();
+
+  _login(String username, String password) {
+    final loginData = LoginData(username, password);
+    var token = AuthAPI.signIn(loginData);
+
+    token.then((t) {
+      print('Token >>>> ' + t.getToken());
+    });
+  }
 
   @override
   void initState() {
@@ -94,8 +106,9 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          _login("admin", "password");
+//          Navigator.pushReplacement(
+//              context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Text("Entrar",
             textAlign: TextAlign.center,
