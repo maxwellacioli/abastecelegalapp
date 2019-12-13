@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class Body extends StatelessWidget {
 
   Widget buildList(UserModel userModel) {
-    User user = userModel.getUser();
+    var user = userModel.user;
 
     if(user.vehicles.isEmpty) {
       return Text('Lista vazia');
@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final userModel = Provider.of<UserModel>(context);
+    var userModel = Provider.of<UserModel>(context);
 
     return Center(
         child: Container(

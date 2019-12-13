@@ -58,7 +58,7 @@ class Body extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 25.0),
                       child: new Text(
-                        userModel.getUser().username,
+                        userModel.user.username,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -87,7 +87,7 @@ class Body extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               new Text(
-                                userModel.getUser().name,
+                                userModel.user.name,
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 16.0,
@@ -113,7 +113,7 @@ class Body extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               new Text(
-                                userModel.getUser().email,
+                                userModel.user.email,
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 16.0,
