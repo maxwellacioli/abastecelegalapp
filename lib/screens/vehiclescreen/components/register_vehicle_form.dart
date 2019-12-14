@@ -1,7 +1,4 @@
-import 'package:abastecelegalapp/models/signup_data.dart';
-import 'package:abastecelegalapp/services/auth_api.dart';
 import 'package:flutter/material.dart';
-import 'package:abastecelegalapp/screens/login/loginscreen.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key key}) : super(key: key);
@@ -14,11 +11,38 @@ class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
 
+  List<String> _fuelTypes = ['GASOLINA', 'ETANOL', 'DIESEL'];
+  List<DropdownMenuItem<String>> _dropDownMenuItems;
+
   String _fuelType;
   String _vehicleType;
   String _model;
   String _licensePlate;
   double _currentTotalDistance;
+
+  @override
+  void initState() {
+    _dropDownMenuItems = getDropDownMenuItems();
+    _fuelType = _dropDownMenuItems[0].value;
+    super.initState();
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String fuelType in _fuelTypes) {
+      items.add(new DropdownMenuItem(
+          value: fuelType,
+          child: new Text(fuelType)
+      ));
+    }
+    return items;
+  }
+
+  void changedDropDownItem(String selectedFuelType) {
+    setState(() {
+      _fuelType = selectedFuelType;
+    });
+  }
 
   Widget registerButton () {
 
@@ -68,16 +92,10 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextFormField(
-            autofocus: true,
-            onSaved: (value) => _fuelType = value,
-            decoration:
-            const InputDecoration(labelText: 'Combustível', hintText: 'Gasolina'),
-            validator: (String value) {
-              if (value.trim().isEmpty) {
-                return 'Name name is required';
-              }
-            },
+          DropdownButton(
+            value: _fuelType,
+            items: _dropDownMenuItems,
+            onChanged: changedDropDownItem,
           ),
           const SizedBox(height: 40.0),
           TextFormField(
