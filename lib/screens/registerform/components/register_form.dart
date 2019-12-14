@@ -68,7 +68,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 labelText: 'Password', hintText: 'Password'),
             validator: (String value) {
               if (value.trim().isEmpty) {
-                return 'Password is required';
+                return 'Password é necessário';
               }
             },
           ),
