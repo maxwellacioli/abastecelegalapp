@@ -7,11 +7,8 @@ class User {
   String email;
   String password;
   String token;
-  List<Vehicle> vehicles;
 
-  User.token(this.token) {
-    this.vehicles = [];
-  }
+  User.token(this.token);
 
   void setId(int id) {
     this.id = id;
@@ -35,8 +32,6 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
-
-    this.vehicles = [];
   }
 
   User.fromJson(Map json)
