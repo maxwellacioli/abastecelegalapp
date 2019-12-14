@@ -6,6 +6,13 @@ class VehiclePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Body(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        onPressed: (){},
+        tooltip: 'Adicionar veículo',
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
