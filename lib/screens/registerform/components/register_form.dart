@@ -49,7 +49,6 @@ class _RegisterFormState extends State<RegisterForm> {
               } else if (!validEmail(value)) {
                 return 'Invalid e-mail format';
               }
-              print(value);
             },
           ),
           const SizedBox(height: 16.0),

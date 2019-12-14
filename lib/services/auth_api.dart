@@ -26,8 +26,6 @@ class AuthAPI {
   static Future<http.Response> me(String token) async {
     var url = baseUrl + '/me';
 
-    print(token);
-
     var response =
     await http.get(url,
         headers: {HttpHeaders.CONTENT_TYPE : 'application/json',

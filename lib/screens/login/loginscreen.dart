@@ -28,36 +28,12 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Token token;
 
-  final _username = TextEditingController();
-  final _password = TextEditingController();
+  String _username;
+  String _password;
 
-  bool success = false;
-
-  _me() {
+  setToken(String token) {
     var userModel = Provider.of<UserModel>(context);
-    var response = AuthAPI.me(userModel.user.token);
-
-    response.then((r) {
-      User user = User.fromJson(json.decode(r.body));
-
-      userModel.user.setId(user.id);
-      userModel.user.setEmail(user.email);
-      userModel.user.setUsername(user.username);
-      userModel.user.setName(user.name);
-    });
-  }
-
-  _login(String username, String password) {
-    var userModel = Provider.of<UserModel>(context);
-    final loginData = LoginData(username, password);
-    var response = AuthAPI.signIn(loginData);
-
-    response.then((r) {
-      if(r.statusCode == 200) {
-        success = true;
-        userModel.setUser(User.token(Token.fromJson(json.decode(r.body)).getToken()));
-      }
-    });
+    userModel.setUser(User.token(token));
   }
 
   @override
@@ -90,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
 
     //Username Field
     final usernameField = TextFormField(
-      controller: _username,
+      onSaved: (value) => _username = value,
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -108,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
 
     //Password Field
     final passwordField = TextFormField(
-      controller: _password,
+      onSaved: (value) => _password = value,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -131,14 +107,34 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          print('I was pressed');
+        onPressed: ()  async {
+          _formKey.currentState.save();
+
           if(_formKey.currentState.validate()) {
-            _login(_username.text.trim(), _password.text);
-            if(success) {
-                _me();
+            final loginData = LoginData(_username.trim(), _password);
+            var response = await AuthAPI.signIn(loginData);
+
+
+
+            if(response.statusCode == 200) {
+              setToken(Token.fromJson(json.decode(response.body)).getToken());
+
+              var userModel = Provider.of<UserModel>(context);
+
+              var responseMe = await AuthAPI.me(userModel.user.token);
+
+              if(responseMe.statusCode == 200) {
+
+                User user = User.fromJson(json.decode(responseMe.body));
+
+                userModel.user.setId(user.id);
+                userModel.user.setEmail(user.email);
+                userModel.user.setUsername(user.username);
+                userModel.user.setName(user.name);
+
                 Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
+              }
             }
           }
         },
