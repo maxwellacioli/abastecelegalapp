@@ -6,7 +6,28 @@ class User {
   String name;
   String email;
   String password;
+  String token;
   List<Vehicle> vehicles;
+
+  User.token(this.token) {
+    this.vehicles = [];
+  }
+
+  void setId(int id) {
+    this.id = id;
+  }
+
+  void setName(String name) {
+    this.name = name;
+  }
+
+  void setEmail(String email) {
+    this.email = email;
+  }
+
+  void setUsername(String username) {
+    this.username = username;
+  }
 
   User(int id, String username, String name, String email, String password) {
     this.id = id;
@@ -20,10 +41,10 @@ class User {
 
   User.fromJson(Map json)
     :
-      id = json['id'],
-      username = json['username'],
-      name = json['name'],
-      email = json['email'];
+      this.id = json['id'],
+      this.username = json['username'],
+      this.name = json['name'],
+      this.email = json['email'];
 
   Map toJson() {
     return {

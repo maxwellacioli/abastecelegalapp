@@ -31,9 +31,33 @@ class _LoginPageState extends State<LoginPage> {
   final _username = TextEditingController();
   final _password = TextEditingController();
 
+  bool success = false;
+
+  _me() {
+    var userModel = Provider.of<UserModel>(context);
+    var response = AuthAPI.me(userModel.user.token);
+
+    response.then((r) {
+      User user = User.fromJson(json.decode(r.body));
+
+      userModel.user.setId(user.id);
+      userModel.user.setEmail(user.email);
+      userModel.user.setUsername(user.username);
+      userModel.user.setName(user.name);
+    });
+  }
+
   _login(String username, String password) {
+    var userModel = Provider.of<UserModel>(context);
     final loginData = LoginData(username, password);
-    AuthAPI.signIn(loginData);
+    var response = AuthAPI.signIn(loginData);
+
+    response.then((r) {
+      if(r.statusCode == 200) {
+        success = true;
+        userModel.setUser(User.token(Token.fromJson(json.decode(r.body)).getToken()));
+      }
+    });
   }
 
   @override
@@ -108,11 +132,15 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
+          print('I was pressed');
           if(_formKey.currentState.validate()) {
             _login(_username.text.trim(), _password.text);
+            if(success) {
+                _me();
+                Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            }
           }
-//          Navigator.pushReplacement(
-//              context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Text("Entrar",
             textAlign: TextAlign.center,
