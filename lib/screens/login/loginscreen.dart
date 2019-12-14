@@ -25,11 +25,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Token token;
 
   String _username;
   String _password;
+
+  bool _loading = false;
 
   setToken(String token) {
     var userModel = Provider.of<UserModel>(context);
@@ -111,6 +114,10 @@ class _LoginPageState extends State<LoginPage> {
           _formKey.currentState.save();
 
           if(_formKey.currentState.validate()) {
+            setState((){
+              _loading = true;
+            });
+
             final loginData = LoginData(_username.trim(), _password);
             var response = await AuthAPI.signIn(loginData);
 
@@ -193,7 +200,15 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  signUp,
+                  _loading ?
+                  new Container(
+                    color: Colors.white,
+                    width: 70.0,
+                    height: 70.0,
+                    child: new Padding(padding: const EdgeInsets.all(5.0),child: new Center(child: new CircularProgressIndicator(
+                      backgroundColor: Colors.blue,
+                    ))),
+                  ) : signUp,
                 ],
               ),
             ),
