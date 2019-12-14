@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key key}) : super(key: key);
@@ -11,6 +12,8 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
+
+  var _licensePlateController = new MaskedTextController(mask: 'AAA0000');
 
   final _fuelTypes = ['GASOLINA', 'ETANOL', 'DIESEL'];
 
@@ -146,6 +149,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 40.0),
           TextFormField(
             onSaved: (value) => _licensePlate = value,
+            controller: _licensePlateController,
             decoration: const InputDecoration(
                 labelText: 'Placa', hintText: 'ABC1234'),
             validator: (String value) {
