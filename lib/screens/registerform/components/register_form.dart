@@ -19,6 +19,47 @@ class _RegisterFormState extends State<RegisterForm> {
   String _username;
   String _password;
 
+  Widget signUpButton () {
+
+    return Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 15.0),
+            ),
+            Center(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Material(
+                      elevation: 5.0,
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Colors.blue,
+                      child: MaterialButton(
+                        minWidth: 200.0,
+                        onPressed: () async {
+                          bool success = await _submit();
+                          if(success) {
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Text("Cadastrar",
+                            textAlign: TextAlign.center,
+                            style: style.copyWith(
+                                color: Colors.white, fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -37,7 +78,7 @@ class _RegisterFormState extends State<RegisterForm> {
               }
             },
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 40.0),
           TextFormField(
             onSaved: (value) => _email = value,
             decoration: const InputDecoration(
@@ -50,7 +91,7 @@ class _RegisterFormState extends State<RegisterForm> {
               }
             },
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 40.0),
           TextFormField(
             onSaved: (value) => _username = value,
             decoration: const InputDecoration(
@@ -61,7 +102,7 @@ class _RegisterFormState extends State<RegisterForm> {
               }
             },
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 40.0),
           TextFormField(
             onSaved: (value) => _password = value,
             decoration: const InputDecoration(
@@ -72,34 +113,8 @@ class _RegisterFormState extends State<RegisterForm> {
               }
             },
           ),
-          const SizedBox(height: 16.0),
-          Row(
-            children: <Widget>[
-              MaterialButton(
-                color: Colors.blue,
-                onPressed: () {
-
-                  Navigator.pop(context);
-                },
-                child: Text("Voltar",
-                    textAlign: TextAlign.center,
-                    style: style.copyWith(color: Colors.white)),
-              ),
-              const Spacer(),
-              MaterialButton(
-                color: Colors.blue,
-                onPressed: () async {
-                  bool success = await _submit();
-                  if(success) {
-                      Navigator.pop(context);
-                    }
-                  },
-                child: Text("Cadastrar",
-                    textAlign: TextAlign.center,
-                    style: style.copyWith(color: Colors.white)),
-              ),
-            ],
-          ),
+          const SizedBox(height: 40.0),
+          signUpButton(),
         ],
       ),
     );
