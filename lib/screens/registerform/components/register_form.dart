@@ -1,3 +1,5 @@
+import 'package:abastecelegalapp/models/signup_data.dart';
+import 'package:abastecelegalapp/services/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:abastecelegalapp/screens/login/loginscreen.dart';
 
@@ -12,6 +14,11 @@ class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
 
+  String _name;
+  String _email;
+  String _username;
+  String _password;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,6 +28,7 @@ class _RegisterFormState extends State<RegisterForm> {
         children: <Widget>[
           TextFormField(
             autofocus: true,
+            onSaved: (value) => _name = value,
             decoration:
                 const InputDecoration(labelText: 'Nome', hintText: 'Nome'),
             validator: (String value) {
@@ -31,16 +39,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 16.0),
           TextFormField(
-            decoration: const InputDecoration(
-                labelText: 'Sobrenome', hintText: 'Sobrenome'),
-            validator: (String value) {
-              if (value.trim().isEmpty) {
-                return 'Surname is required';
-              }
-            },
-          ),
-          const SizedBox(height: 16.0),
-          TextFormField(
+            onSaved: (value) => _email = value,
             decoration: const InputDecoration(
                 labelText: 'E-mail', hintText: 'examplo@email.com'),
             validator: (String value) {
@@ -53,6 +52,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 16.0),
           TextFormField(
+            onSaved: (value) => _username = value,
             decoration: const InputDecoration(
                 labelText: 'Username', hintText: 'Username'),
             validator: (String value) {
@@ -63,6 +63,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           const SizedBox(height: 16.0),
           TextFormField(
+            onSaved: (value) => _password = value,
             decoration: const InputDecoration(
                 labelText: 'Password', hintText: 'Password'),
             validator: (String value) {
@@ -77,6 +78,7 @@ class _RegisterFormState extends State<RegisterForm> {
               MaterialButton(
                 color: Colors.blue,
                 onPressed: () {
+
                   Navigator.pop(context);
                 },
                 child: Text("Voltar",
@@ -86,7 +88,12 @@ class _RegisterFormState extends State<RegisterForm> {
               const Spacer(),
               MaterialButton(
                 color: Colors.blue,
-                onPressed: _submit,
+                onPressed: () async {
+                  bool success = await _submit();
+                  if(success) {
+                      Navigator.pop(context);
+                    }
+                  },
                 child: Text("Cadastrar",
                     textAlign: TextAlign.center,
                     style: style.copyWith(color: Colors.white)),
@@ -98,9 +105,21 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  void _submit() {
-    _formKey.currentState.validate();
-    print('Form submitted');
+  Future<bool> _submit() async {
+    _formKey.currentState.save();
+    bool success = false;
+
+    if(_formKey.currentState.validate()) {
+      var signUpData = SignUpData(_name, _email, _username, _password);
+
+      var response = await AuthAPI.signUp(signUpData);
+
+      if(response.statusCode == 200) {
+        success = true;
+      }
+    }
+
+    return success;
   }
 
   bool validEmail(String email) {

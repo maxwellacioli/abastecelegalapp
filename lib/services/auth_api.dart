@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:abastecelegalapp/models/login_data.dart';
+import 'package:abastecelegalapp/models/signup_data.dart';
 import 'package:abastecelegalapp/models/user.dart';
 import 'package:abastecelegalapp/provs/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +20,17 @@ class AuthAPI {
         await http.post(url,
           headers: {HttpHeaders.CONTENT_TYPE : 'application/json'},
           body: jsonEncode(loginData));
+
+    return response;
+  }
+
+  static Future<http.Response> signUp(SignUpData signUpData) async {
+    var url = baseUrl + '/signup';
+
+    var response =
+    await http.post(url,
+        headers: {HttpHeaders.CONTENT_TYPE : 'application/json'},
+        body: jsonEncode(signUpData));
 
     return response;
   }
