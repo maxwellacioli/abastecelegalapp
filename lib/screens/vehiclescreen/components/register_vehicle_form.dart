@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:direct_select/direct_select.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key key}) : super(key: key);
@@ -11,8 +12,12 @@ class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 16.0);
 
-  List<String> _fuelTypes = ['GASOLINA', 'ETANOL', 'DIESEL'];
-  List<DropdownMenuItem<String>> _dropDownMenuItems;
+  final _fuelTypes = ['GASOLINA', 'ETANOL', 'DIESEL'];
+
+  final _vehicleTypes = ['CARRO', 'MOTO', 'ÔNIBUS', 'CAMINHÃO'];
+
+  int _selectedVehicleType = 0;
+  int _selectedFuelType = 0;
 
   String _fuelType;
   String _vehicleType;
@@ -20,28 +25,20 @@ class _RegisterFormState extends State<RegisterForm> {
   String _licensePlate;
   double _currentTotalDistance;
 
-  @override
-  void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
-    _fuelType = _dropDownMenuItems[0].value;
-    super.initState();
+  List<Widget> _buildVehicleType() {
+    return _vehicleTypes
+        .map((val) => MySelectionItem(
+      title: val,
+    ))
+        .toList();
   }
 
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = new List();
-    for (String fuelType in _fuelTypes) {
-      items.add(new DropdownMenuItem(
-          value: fuelType,
-          child: new Text(fuelType)
-      ));
-    }
-    return items;
-  }
-
-  void changedDropDownItem(String selectedFuelType) {
-    setState(() {
-      _fuelType = selectedFuelType;
-    });
+  List<Widget> _buildFuelType() {
+    return _fuelTypes
+        .map((val) => MySelectionItem(
+      title: val,
+    ))
+        .toList();
   }
 
   Widget registerButton () {
@@ -92,22 +89,49 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          DropdownButton(
-            value: _fuelType,
-            items: _dropDownMenuItems,
-            onChanged: changedDropDownItem,
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              "Tipo de Combustível",
+              style: TextStyle(
+                  color: Colors.black),
+            ),
           ),
-          const SizedBox(height: 40.0),
-          TextFormField(
-            onSaved: (value) => _vehicleType = value,
-            decoration: const InputDecoration(
-                labelText: 'Tipo', hintText: 'Carro'),
-            validator: (String value) {
-              if (value.trim().isEmpty) {
-                return 'Email is required';
-              }
-            },
+          DirectSelect(
+              itemExtent: 35.0,
+              selectedIndex: _selectedFuelType,
+              child: MySelectionItem(
+                isForList: false,
+                title: _fuelTypes[_selectedFuelType],
+              ),
+              onSelectedItemChanged: (index) {
+                setState(() {
+                  _selectedFuelType = index;
+                });
+              },
+              items: _buildFuelType()),
+          const SizedBox(height: 30.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              "Tipo de Veículo",
+              style: TextStyle(
+                  color: Colors.black),
+            ),
           ),
+          DirectSelect(
+              itemExtent: 35.0,
+              selectedIndex: _selectedVehicleType,
+              child: MySelectionItem(
+                isForList: false,
+                title: _vehicleTypes[_selectedVehicleType],
+              ),
+              onSelectedItemChanged: (index) {
+                setState(() {
+                  _selectedVehicleType = index;
+                });
+              },
+              items: _buildVehicleType()),
           const SizedBox(height: 40.0),
           TextFormField(
             onSaved: (value) => _model = value,
@@ -158,5 +182,47 @@ class _RegisterFormState extends State<RegisterForm> {
     return RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
+  }
+}
+
+class MySelectionItem extends StatelessWidget {
+  final String title;
+  final bool isForList;
+
+  const MySelectionItem({Key key, this.title, this.isForList = true})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60.0,
+      child: isForList
+          ? Padding(
+        child: _buildItem(context),
+        padding: EdgeInsets.all(10.0),
+      )
+          : Card(
+        margin: EdgeInsets.symmetric(horizontal: 10.0),
+        child: Stack(
+          children: <Widget>[
+            _buildItem(context),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Icon(Icons.arrow_drop_down),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildItem(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      child: Text(title,
+          style: TextStyle(fontSize: 14),
+        ),
+    );
   }
 }
