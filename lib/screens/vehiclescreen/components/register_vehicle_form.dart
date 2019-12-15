@@ -95,28 +95,6 @@ class _RegisterFormState extends State<RegisterForm> {
           Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(
-              "Tipo de Combustível",
-              style: TextStyle(
-                  color: Colors.black),
-            ),
-          ),
-          DirectSelect(
-              itemExtent: 35.0,
-              selectedIndex: _selectedFuelType,
-              child: MySelectionItem(
-                isForList: false,
-                title: _fuelTypes[_selectedFuelType],
-              ),
-              onSelectedItemChanged: (index) {
-                setState(() {
-                  _selectedFuelType = index;
-                });
-              },
-              items: _buildFuelType()),
-          const SizedBox(height: 30.0),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Text(
               "Tipo de Veículo",
               style: TextStyle(
                   color: Colors.black),
