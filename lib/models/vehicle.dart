@@ -1,35 +1,63 @@
 
 class Vehicle {
+
   int id;
-  String fuelType;
   String vehicleType;
   String model;
   String licensePlate;
   double currentTotalDistance;
 
-  Vehicle(this.fuelType, this.vehicleType, this.model, this.licensePlate,
-            this.currentTotalDistance);
+  Vehicle(String vehicleType, String model, String licensePlate) {
+    this.vehicleType = vehicleType;
+    this.model = model;
+    this.licensePlate = licensePlate;
+    this.currentTotalDistance = 0;
+  }
 
   Vehicle.fromJson(Map json) :
         this.id = json['id'],
-        this.fuelType = json['fuelType'],
-        this.vehicleType = json['vehicleType'],
+        this.vehicleType = _vehicleTypeFromJson(json['vehicleType']),
         this.model = json['model'],
         this.licensePlate = json['licensePlate'],
         this.currentTotalDistance = json['currentTotalDistance'];
 
   Map toJson() {
     return {
-      'fuelType' : fuelType,
-      'vehicleType' : vehicleType,
+      'vehicleType' : _vehicleTypeToJson(vehicleType),
       'model' : model,
       'licensePlate' : licensePlate,
       'currentTotalDistance' : currentTotalDistance
     };
   }
 
-  void increaseDistance(double distance) {
-    this.currentTotalDistance += distance;
+  _vehicleTypeToJson(String type) {
+    switch (type) {
+      case "CARRO":
+        return "CAR";
+      case "ÔNIBUS":
+        return "BUS";
+      case "CAMINHÃO":
+        return "TRUCK";
+      case "MOTO":
+        return "MOTO";
+      default:
+        return null;
+    }
   }
 
+  static _vehicleTypeFromJson(String type) {
+    switch (type) {
+      case "CAR":
+        return "CARRO";
+      case "BUS":
+        return "ÔNIBUS";
+      case "TRUCK":
+        return "CAMINHÃO";
+      case "MOTO":
+        return "MOTO";
+      default:
+        return null;
+    }
+  }
 }
+

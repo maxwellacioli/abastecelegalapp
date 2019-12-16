@@ -1,6 +1,10 @@
+import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:abastecelegalapp/models/vehicle.dart';
+import 'package:provider/provider.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key key}) : super(key: key);
@@ -23,7 +27,6 @@ class _RegisterFormState extends State<RegisterForm> {
   int _selectedFuelType = 0;
 
   String _fuelType;
-  String _vehicleType;
   String _model;
   String _licensePlate;
   double _currentTotalDistance;
@@ -31,21 +34,20 @@ class _RegisterFormState extends State<RegisterForm> {
   List<Widget> _buildVehicleType() {
     return _vehicleTypes
         .map((val) => MySelectionItem(
-      title: val,
-    ))
+              title: val,
+            ))
         .toList();
   }
 
   List<Widget> _buildFuelType() {
     return _fuelTypes
         .map((val) => MySelectionItem(
-      title: val,
-    ))
+              title: val,
+            ))
         .toList();
   }
 
-  Widget registerButton () {
-
+  Widget registerButton() {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,14 +68,15 @@ class _RegisterFormState extends State<RegisterForm> {
                       minWidth: 200.0,
                       onPressed: () async {
                         bool success = await _submit();
-                        if(success) {
+                        if (success) {
                           Navigator.pop(context);
                         }
                       },
                       child: Text("Cadastrar",
                           textAlign: TextAlign.center,
                           style: style.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.bold)),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],
@@ -96,8 +99,7 @@ class _RegisterFormState extends State<RegisterForm> {
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(
               "Tipo de Veículo",
-              style: TextStyle(
-                  color: Colors.black),
+              style: TextStyle(color: Colors.black),
             ),
           ),
           DirectSelect(
@@ -116,8 +118,8 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(height: 40.0),
           TextFormField(
             onSaved: (value) => _model = value,
-            decoration: const InputDecoration(
-                labelText: 'Modelo', hintText: 'Ford Ka'),
+            decoration:
+                const InputDecoration(labelText: 'Modelo', hintText: 'Ford Ka'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Username is required';
@@ -128,8 +130,8 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFormField(
             onSaved: (value) => _licensePlate = value,
             controller: _licensePlateController,
-            decoration: const InputDecoration(
-                labelText: 'Placa', hintText: 'ABC1234'),
+            decoration:
+                const InputDecoration(labelText: 'Placa', hintText: 'ABC1234'),
             validator: (String value) {
               if (value.trim().isEmpty) {
                 return 'Password é necessário';
@@ -144,25 +146,28 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   Future<bool> _submit() async {
+    var userModel = Provider.of<UserModel>(context);
+
     _formKey.currentState.save();
     bool success = false;
 
-//    if(_formKey.currentState.validate()) {
-//      var signUpData = SignUpData(_name, _email, _username, _password);
-//
-//      var response = await AuthAPI.signUp(signUpData);
-//
-//      if(response.statusCode == 200) {
-//        success = true;
-//      }
-//    }
+    if (_formKey.currentState.validate()) {
+      var vehicle = Vehicle(_vehicleTypes[_selectedVehicleType], _model, _licensePlate);
+
+      var response = await VehicleService.register(
+          vehicle, userModel.user.id, userModel.user.token);
+
+      if (response.statusCode == 200) {
+        success = true;
+      }
+    }
 
     return success;
   }
 
   bool validEmail(String email) {
     return RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
   }
 }
@@ -180,21 +185,21 @@ class MySelectionItem extends StatelessWidget {
       height: 60.0,
       child: isForList
           ? Padding(
-        child: _buildItem(context),
-        padding: EdgeInsets.all(10.0),
-      )
-          : Card(
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Stack(
-          children: <Widget>[
-            _buildItem(context),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Icon(Icons.arrow_drop_down),
+              child: _buildItem(context),
+              padding: EdgeInsets.all(10.0),
             )
-          ],
-        ),
-      ),
+          : Card(
+              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Stack(
+                children: <Widget>[
+                  _buildItem(context),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.arrow_drop_down),
+                  )
+                ],
+              ),
+            ),
     );
   }
 
@@ -202,9 +207,10 @@ class MySelectionItem extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: Text(title,
-          style: TextStyle(fontSize: 14),
-        ),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 14),
+      ),
     );
   }
 }
