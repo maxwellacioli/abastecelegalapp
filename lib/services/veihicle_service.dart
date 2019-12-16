@@ -12,8 +12,6 @@ class VehicleService {
       Vehicle vehicle, int userId, String token) async {
     var url = baseUrl + '/users/' + userId.toString() + '/vehicles';
 
-    print(jsonEncode(vehicle));
-
     var response = await http.post(url,
         headers: {
           HttpHeaders.CONTENT_TYPE: 'application/json',

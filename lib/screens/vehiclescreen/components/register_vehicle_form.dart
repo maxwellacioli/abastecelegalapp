@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:abastecelegalapp/provs/user_model.dart';
 import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/material.dart';
@@ -19,28 +21,15 @@ class _RegisterFormState extends State<RegisterForm> {
 
   var _licensePlateController = new MaskedTextController(mask: 'AAA0000');
 
-  final _fuelTypes = ['GASOLINA', 'ETANOL', 'DIESEL'];
-
   final _vehicleTypes = ['CARRO', 'MOTO', 'ÔNIBUS', 'CAMINHÃO'];
 
   int _selectedVehicleType = 0;
-  int _selectedFuelType = 0;
 
-  String _fuelType;
   String _model;
   String _licensePlate;
-  double _currentTotalDistance;
 
   List<Widget> _buildVehicleType() {
     return _vehicleTypes
-        .map((val) => MySelectionItem(
-              title: val,
-            ))
-        .toList();
-  }
-
-  List<Widget> _buildFuelType() {
-    return _fuelTypes
         .map((val) => MySelectionItem(
               title: val,
             ))
@@ -152,12 +141,14 @@ class _RegisterFormState extends State<RegisterForm> {
     bool success = false;
 
     if (_formKey.currentState.validate()) {
-      var vehicle = Vehicle(_vehicleTypes[_selectedVehicleType], _model, _licensePlate);
+      var vehicle =
+          Vehicle(_vehicleTypes[_selectedVehicleType], _model, _licensePlate);
 
       var response = await VehicleService.register(
           vehicle, userModel.user.id, userModel.user.token);
 
       if (response.statusCode == 200) {
+        userModel.addVehicle(Vehicle.fromJson(jsonDecode(response.body)));
         success = true;
       }
     }
