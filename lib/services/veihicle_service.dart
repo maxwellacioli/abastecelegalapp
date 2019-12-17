@@ -21,4 +21,19 @@ class VehicleService {
 
     return response;
   }
+
+  static Future<http.Response> findUserVehicles(
+      int userId, String token) async {
+
+    var url = baseUrl + '/users/' + userId.toString() + '/vehicles';
+
+    var response = await http.post(url,
+        headers: {
+          HttpHeaders.CONTENT_TYPE: 'application/json',
+          HttpHeaders.AUTHORIZATION: token
+        });
+
+
+    return response;
+  }
 }
