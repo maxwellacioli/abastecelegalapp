@@ -7,6 +7,7 @@ import 'package:abastecelegalapp/provs/user_model.dart';
 import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
 import 'package:abastecelegalapp/services/auth_api.dart';
+import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -103,6 +104,40 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
+    Future<bool> _login() async {
+
+      bool success = false;
+
+      final loginData = LoginData(_username.trim(), _password);
+      var response = await AuthAPI.signIn(loginData);
+
+      if(response.statusCode == 200) {
+        setToken(Token.fromJson(json.decode(response.body)).getToken());
+
+        var userModel = Provider.of<UserModel>(context);
+
+        var responseMe = await AuthAPI.me(userModel.user.token);
+
+        if(responseMe.statusCode == 200) {
+
+          User user = User.fromJson(json.decode(responseMe.body));
+
+          userModel.user.setId(user.id);
+          userModel.user.setEmail(user.email);
+          userModel.user.setUsername(user.username);
+          userModel.user.setName(user.name);
+
+          var responseVehicle = await VehicleService
+              .findUserVehicles(userModel.user.id, userModel.user.token);
+
+          success = true;
+
+        }
+      }
+
+      return success;
+    }
+
     final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -118,30 +153,10 @@ class _LoginPageState extends State<LoginPage> {
               _loading = true;
             });
 
-            final loginData = LoginData(_username.trim(), _password);
-            var response = await AuthAPI.signIn(loginData);
-
-
-
-            if(response.statusCode == 200) {
-              setToken(Token.fromJson(json.decode(response.body)).getToken());
-
-              var userModel = Provider.of<UserModel>(context);
-
-              var responseMe = await AuthAPI.me(userModel.user.token);
-
-              if(responseMe.statusCode == 200) {
-
-                User user = User.fromJson(json.decode(responseMe.body));
-
-                userModel.user.setId(user.id);
-                userModel.user.setEmail(user.email);
-                userModel.user.setUsername(user.username);
-                userModel.user.setName(user.name);
-
-                Navigator.pushReplacement(
+            var success = await _login();
+            if(success) {
+              Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
-              }
             }
           }
         },
