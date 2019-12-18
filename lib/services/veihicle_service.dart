@@ -23,20 +23,39 @@ class VehicleService {
     return response;
   }
 
-  static Future<Response> findUserVehicles(
-      int userId, String token) async {
+  static Future<List<Vehicle>> getVehicles(
+      int userId, String token, int pageNumber) async {
     Dio dio = new Dio();
 
     var url = baseUrl + '/users/${userId.toString()}/vehicles';
 
     var response = await dio.get(url,
-        options: Options(
-          headers: {
-            Headers.contentTypeHeader : 'application/json',
-            HttpHeaders.authorizationHeader : token
-          }
-        ),
-        queryParameters: {"page": 0});
+        options: Options(headers: {
+          Headers.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: token
+        }),
+        queryParameters: {"page": pageNumber});
+
+    List<dynamic> content = response.data['content'];
+
+    List<Vehicle> vehicles = content.map((v) => Vehicle.fromJson(v))
+        .toList();
+
+    return vehicles;
+  }
+
+  static Future<Response> findUserVehicles(
+      int userId, String token, int pageNumber) async {
+    Dio dio = new Dio();
+
+    var url = baseUrl + '/users/${userId.toString()}/vehicles';
+
+    var response = await dio.get(url,
+        options: Options(headers: {
+          Headers.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: token
+        }),
+        queryParameters: {"page": pageNumber});
 
     return response;
   }

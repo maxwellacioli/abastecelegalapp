@@ -121,17 +121,13 @@ class _LoginPageState extends State<LoginPage> {
           userModel.user.setUsername(user.username);
           userModel.user.setName(user.name);
 
-          var responseVehicle = await VehicleService.findUserVehicles(
-              userModel.user.id, userModel.user.token);
+          var vehicles = await VehicleService.getVehicles(
+              userModel.user.id, userModel.user.token, 0);
 
-          if (responseVehicle.statusCode == 200) {
-            success = true;
+          //TODO set into UserModel.vehicles
 
-            VehicleList vehicleList =
-                VehicleList.fromJson(responseVehicle.data);
+//          userModel.vehicles = vehicles;
 
-            userModel.vehicles = vehicleList.vehicles;
-          }
         }
       }
 
