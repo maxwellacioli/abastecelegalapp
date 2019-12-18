@@ -121,11 +121,6 @@ class _LoginPageState extends State<LoginPage> {
           userModel.user.setUsername(user.username);
           userModel.user.setName(user.name);
 
-          var vehicles = await VehicleService.getVehicles(
-              userModel.user.id, userModel.user.token, 0);
-
-          userModel.vehicles.addAll(vehicles);
-
           success = true;
         }
       }
