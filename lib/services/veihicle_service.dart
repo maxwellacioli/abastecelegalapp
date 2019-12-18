@@ -10,7 +10,7 @@ const baseUrl = 'https://abastecelegal.herokuapp.com/api';
 class VehicleService {
   static Future<http.Response> register(
       Vehicle vehicle, int userId, String token) async {
-    var url = baseUrl + '/users/' + userId.toString() + '/vehicles';
+    var url = baseUrl + '/users/${userId.toString()}/vehicles';
 
     var response = await http.post(url,
         headers: {
@@ -25,7 +25,7 @@ class VehicleService {
   static Future<http.Response> findUserVehicles(
       int userId, String token) async {
 
-    var url = baseUrl + '/users/' + userId.toString() + '/vehicles';
+    var url = baseUrl + '/users/${userId.toString()}/vehicles';
 
     var response = await http.get(url,
         headers: {

@@ -14,7 +14,7 @@ const baseUrl = 'https://abastecelegal.herokuapp.com/api/auth';
 class AuthAPI {
 
   static Future<http.Response> signIn(LoginData loginData) async {
-    var url = baseUrl + '/signin';
+    var url = '$baseUrl/signin';
     
     var response =
         await http.post(url,
@@ -25,7 +25,7 @@ class AuthAPI {
   }
 
   static Future<http.Response> signUp(SignUpData signUpData) async {
-    var url = baseUrl + '/signup';
+    var url = '$baseUrl/signup';
 
     var response =
     await http.post(url,
@@ -36,7 +36,7 @@ class AuthAPI {
   }
 
   static Future<http.Response> me(String token) async {
-    var url = baseUrl + '/me';
+    var url = '$baseUrl/me';
 
     var response =
     await http.get(url,
