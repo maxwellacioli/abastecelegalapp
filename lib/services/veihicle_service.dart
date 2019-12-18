@@ -27,12 +27,11 @@ class VehicleService {
 
     var url = baseUrl + '/users/' + userId.toString() + '/vehicles';
 
-    var response = await http.post(url,
+    var response = await http.get(url,
         headers: {
           HttpHeaders.CONTENT_TYPE: 'application/json',
           HttpHeaders.AUTHORIZATION: token
         });
-
 
     return response;
   }

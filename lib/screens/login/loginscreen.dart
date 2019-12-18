@@ -105,7 +105,6 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     Future<bool> _login() async {
-
       bool success = false;
 
       final loginData = LoginData(_username.trim(), _password);
@@ -115,13 +114,10 @@ class _LoginPageState extends State<LoginPage> {
         setToken(Token.fromJson(json.decode(response.body)).getToken());
 
         var userModel = Provider.of<UserModel>(context);
-
         var responseMe = await AuthAPI.me(userModel.user.token);
 
         if(responseMe.statusCode == 200) {
-
           User user = User.fromJson(json.decode(responseMe.body));
-
           userModel.user.setId(user.id);
           userModel.user.setEmail(user.email);
           userModel.user.setUsername(user.username);
@@ -130,8 +126,10 @@ class _LoginPageState extends State<LoginPage> {
           var responseVehicle = await VehicleService
               .findUserVehicles(userModel.user.id, userModel.user.token);
 
-          success = true;
-
+          if(responseVehicle.statusCode == 200) {
+            success = true;
+            //TODO Get vehicles from body and set into usermodel prov
+          }
         }
       }
 
@@ -154,6 +152,7 @@ class _LoginPageState extends State<LoginPage> {
             });
 
             var success = await _login();
+
             if(success) {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
