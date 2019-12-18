@@ -17,20 +17,23 @@ class _VehicleListState extends State<VehicleList> {
   ScrollController _controller;
 
   _getData() async {
-    if (!_loading) {
-      setState(() {
-        _loading = true;
-      });
-
+    if (this.mounted) {
+      if (!_loading) {
+        setState(() {
+          _loading = true;
+        });
+      }
       var userModel = Provider.of<UserModel>(context);
       var vehicles = await VehicleService.getVehicles(
           userModel.user.id, userModel.user.token, nextPage);
 
-      setState(() {
-        _loading = false;
-        userModel.vehicles.addAll(vehicles);
-        nextPage = nextPage + 1;
-      });
+      if (this.mounted) {
+        setState(() {
+          _loading = false;
+          userModel.vehicles.addAll(vehicles);
+          nextPage = nextPage + 1;
+        });
+      }
     }
   }
 
@@ -43,12 +46,6 @@ class _VehicleListState extends State<VehicleList> {
         _getData();
       }
     });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   Widget _buildProgressIndicator() {
@@ -81,7 +78,6 @@ class _VehicleListState extends State<VehicleList> {
               color: Colors.blue,
               child: Center(
                 child: Container(
-
                   padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                   child: Text(vehicles[index].licensePlate),
                 ),
@@ -96,9 +92,7 @@ class _VehicleListState extends State<VehicleList> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      _getData();
-    });
+    _getData();
 
     return Scaffold(
       body: Container(
