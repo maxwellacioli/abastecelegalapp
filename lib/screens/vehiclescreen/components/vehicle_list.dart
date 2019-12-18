@@ -73,11 +73,20 @@ class _VehicleListState extends State<VehicleList> {
         if (index == vehicles.length) {
           return _buildProgressIndicator();
         } else {
-          return new ListTile(
-            title: Text((vehicles[index].licensePlate)),
+          return GestureDetector(
             onTap: () {
-              print(vehicles[index].id);
+              print(vehicles[index].id.toString());
             },
+            child: Container(
+              color: Colors.blue,
+              child: Center(
+                child: Container(
+
+                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  child: Text(vehicles[index].licensePlate),
+                ),
+              ),
+            ),
           );
         }
       },
