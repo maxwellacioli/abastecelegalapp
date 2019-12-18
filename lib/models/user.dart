@@ -1,5 +1,3 @@
-import 'package:abastecelegalapp/models/vehicle.dart';
-
 class User {
   int id;
   String username;

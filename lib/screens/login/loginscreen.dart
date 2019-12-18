@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:abastecelegalapp/models/login_data.dart';
 import 'package:abastecelegalapp/models/token_data.dart';
 import 'package:abastecelegalapp/models/user.dart';
+import 'package:abastecelegalapp/models/vehicle_list.dart';
 import 'package:abastecelegalapp/provs/user_model.dart';
 import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
@@ -125,7 +126,11 @@ class _LoginPageState extends State<LoginPage> {
 
           if (responseVehicle.statusCode == 200) {
             success = true;
-            //TODO Get vehicles from body and set into usermodel prov
+
+            VehicleList vehicleList =
+                VehicleList.fromJson(json.decode(responseVehicle.body));
+
+            userModel.vehicles = vehicleList.vehicles;
           }
         }
       }
