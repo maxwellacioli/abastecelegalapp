@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 
 import 'package:abastecelegalapp/models/vehicle.dart';
 import 'package:http/http.dart' as http;
@@ -14,24 +15,28 @@ class VehicleService {
 
     var response = await http.post(url,
         headers: {
-          HttpHeaders.CONTENT_TYPE: 'application/json',
-          HttpHeaders.AUTHORIZATION: token
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: token
         },
         body: jsonEncode(vehicle));
 
     return response;
   }
 
-  static Future<http.Response> findUserVehicles(
+  static Future<Response> findUserVehicles(
       int userId, String token) async {
+    Dio dio = new Dio();
 
     var url = baseUrl + '/users/${userId.toString()}/vehicles';
 
-    var response = await http.get(url,
-        headers: {
-          HttpHeaders.CONTENT_TYPE: 'application/json',
-          HttpHeaders.AUTHORIZATION: token
-        });
+    var response = await dio.get(url,
+        options: Options(
+          headers: {
+            Headers.contentTypeHeader : 'application/json',
+            HttpHeaders.authorizationHeader : token
+          }
+        ),
+        queryParameters: {"page": 0});
 
     return response;
   }

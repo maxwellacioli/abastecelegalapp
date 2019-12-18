@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
             success = true;
 
             VehicleList vehicleList =
-                VehicleList.fromJson(json.decode(responseVehicle.body));
+                VehicleList.fromJson(responseVehicle.data);
 
             userModel.vehicles = vehicleList.vehicles;
           }

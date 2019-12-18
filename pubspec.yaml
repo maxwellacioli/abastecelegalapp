@@ -32,6 +32,8 @@ dependencies:
 
   flutter_masked_text: ^0.8.0
 
+  dio: ^3.0.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
