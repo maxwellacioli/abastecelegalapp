@@ -22,8 +22,6 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-
-
 class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
@@ -42,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final newUserText = Text('Novo Usuário? ',
         style: TextStyle(
           fontSize: 16,
@@ -79,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if(value.isEmpty) {
+        if (value.isEmpty) {
           return 'Nome do usuario obrigatorio';
         }
         return null;
@@ -97,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       validator: (value) {
-        if(value.isEmpty) {
+        if (value.isEmpty) {
           return 'Senha do usuario obrigatorio';
         }
         return null;
@@ -110,23 +107,23 @@ class _LoginPageState extends State<LoginPage> {
       final loginData = LoginData(_username.trim(), _password);
       var response = await AuthAPI.signIn(loginData);
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         setToken(Token.fromJson(json.decode(response.body)).getToken());
 
         var userModel = Provider.of<UserModel>(context);
         var responseMe = await AuthAPI.me(userModel.user.token);
 
-        if(responseMe.statusCode == 200) {
+        if (responseMe.statusCode == 200) {
           User user = User.fromJson(json.decode(responseMe.body));
           userModel.user.setId(user.id);
           userModel.user.setEmail(user.email);
           userModel.user.setUsername(user.username);
           userModel.user.setName(user.name);
 
-          var responseVehicle = await VehicleService
-              .findUserVehicles(userModel.user.id, userModel.user.token);
+          var responseVehicle = await VehicleService.findUserVehicles(
+              userModel.user.id, userModel.user.token);
 
-          if(responseVehicle.statusCode == 200) {
+          if (responseVehicle.statusCode == 200) {
             success = true;
             //TODO Get vehicles from body and set into usermodel prov
           }
@@ -143,17 +140,17 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: ()  async {
+        onPressed: () async {
           _formKey.currentState.save();
 
-          if(_formKey.currentState.validate()) {
-            setState((){
+          if (_formKey.currentState.validate()) {
+            setState(() {
               _loading = true;
             });
 
             var success = await _login();
 
-            if(success) {
+            if (success) {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
             }
@@ -165,6 +162,17 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
+
+    final _submitArea = Container(
+        child: Column(
+      children: <Widget>[
+        loginButton,
+        SizedBox(
+          height: 15.0,
+        ),
+        signUp
+      ],
+    ));
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -206,23 +214,23 @@ class _LoginPageState extends State<LoginPage> {
                         passwordField,
                         SizedBox(
                           height: 35.0,
-                        ),
-                        loginButton,
-                        SizedBox(
-                          height: 15.0,
-                        ),
+                        )
                       ],
                     ),
                   ),
-                  _loading ?
-                  new Container(
-                    color: Colors.white,
-                    width: 70.0,
-                    height: 70.0,
-                    child: new Padding(padding: const EdgeInsets.all(5.0),child: new Center(child: new CircularProgressIndicator(
-                      backgroundColor: Colors.blue,
-                    ))),
-                  ) : signUp,
+                  _loading
+                      ? new Container(
+                          color: Colors.white,
+                          width: 70.0,
+                          height: 70.0,
+                          child: new Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: new Center(
+                                  child: new CircularProgressIndicator(
+                                backgroundColor: Colors.blue,
+                              ))),
+                        )
+                      : _submitArea,
                 ],
               ),
             ),
