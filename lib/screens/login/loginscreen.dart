@@ -124,10 +124,9 @@ class _LoginPageState extends State<LoginPage> {
           var vehicles = await VehicleService.getVehicles(
               userModel.user.id, userModel.user.token, 0);
 
-          //TODO set into UserModel.vehicles
+          userModel.vehicles.addAll(vehicles);
 
-//          userModel.vehicles = vehicles;
-
+          success = true;
         }
       }
 

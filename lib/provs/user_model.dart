@@ -17,6 +17,11 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addAll(List<Vehicle> vehicles) {
+    this.vehicles.addAll(vehicles);
+    notifyListeners();
+  }
+
   void setSelectedVehicle(Vehicle vehicle) {
     this.vehicles = vehicles;
     notifyListeners();
