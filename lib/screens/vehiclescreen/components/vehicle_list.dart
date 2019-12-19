@@ -64,23 +64,53 @@ class _VehicleListState extends State<VehicleList> {
         if (index == vehicles.length) {
           return _buildProgressIndicator();
         } else {
-          return GestureDetector(
+          var vehicle = vehicles[index];
+
+
+          return new GestureDetector(
             onTap: () {
               var userProv = Provider.of<UserProvider>(context);
               userProv.setSelectedVehicle(vehicles[index]);
               //TODO Set principal on database
-              print(vehicles[index].id.toString());
+              print(vehicle.id.toString());
             },
-            child: Container(
-              color: Colors.green,
-              child: Center(
-                child: Container(
-                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-                  child: Text(vehicles[index].licensePlate),
-                ),
+            child: Card(
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new Text("Tipo: " + vehicle.vehicleType,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20)),
+                  new Text("Modelo: " + vehicle.model,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 16)),
+                  new Text("Placa: " + vehicle.licensePlate,
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 16)),
+                  new Text("Km: " + vehicle.currentTotalDistance.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 16)),
+                ],
               ),
             ),
           );
+//          return GestureDetector(
+//            onTap: () {
+//              var userProv = Provider.of<UserProvider>(context);
+//              userProv.setSelectedVehicle(vehicles[index]);
+//              //TODO Set principal on database
+//              print(vehicles[index].id.toString());
+//            },
+//            child: Container(
+//              color: Colors.green,
+//              child: Center(
+//                child: Container(
+//                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+//                  child: Text(vehicles[index].licensePlate),
+//                ),
+//              ),
+//            ),
+//          );
         }
       },
       controller: _controller,
