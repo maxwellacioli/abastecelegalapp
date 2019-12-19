@@ -15,4 +15,14 @@ class Trip {
     this.date = DateTime.now();
   }
 
+  Map toJson() {
+    return {
+      'date' : this.date.toString(),
+      'fuelType' : this.fuelType,
+      'city' : this.city,
+      'tripDistance' : this.tripDistance,
+      'fuelQuantity' : this.fuelQuantity
+    };
+  }
+
 }

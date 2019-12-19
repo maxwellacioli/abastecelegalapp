@@ -1,5 +1,6 @@
 import 'package:abastecelegalapp/models/trip.dart';
 import 'package:abastecelegalapp/provs/user_prov.dart';
+import 'package:abastecelegalapp/services/trip_service.dart';
 import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -168,6 +169,13 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
     if (_formKey.currentState.validate()) {
       var trip = Trip(_city[_selectedCity], _fuelQuantity, _tripDistance,
           _fuelType[_selectedFuelType]);
+
+      var response = await TripService.register(trip, 1, userProv.user.token);
+
+      print('STATUS CODE ' + response.statusCode.toString());
+      if(response.statusCode == 200) {
+        success = true;
+      }
     }
 
     return success;
