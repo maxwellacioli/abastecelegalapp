@@ -17,7 +17,7 @@ class Trip {
 
   Map toJson() {
     return {
-      'date' : this.date.toString(),
+      'date' : this.date.toIso8601String(),
       'fuelType' : this.fuelType,
       'city' : this.city,
       'tripDistance' : this.tripDistance,
