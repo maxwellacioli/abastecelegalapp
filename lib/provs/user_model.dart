@@ -5,25 +5,18 @@ import 'package:abastecelegalapp/models/user.dart';
 class UserModel extends ChangeNotifier {
   User user;
   Vehicle selectedVehicle;
-  List<Vehicle> vehicles;
+
+  void setVehiclePrincipalId(int id) {
+    user.id = id;
+    notifyListeners();
+  }
 
   UserModel()
-    : user = null,
-      selectedVehicle = null,
-      vehicles = [];
-
-  void addVehicle(Vehicle vehicle) {
-    vehicles.add(vehicle);
-    notifyListeners();
-  }
-
-  void addAll(List<Vehicle> vehicles) {
-    this.vehicles.addAll(vehicles);
-    notifyListeners();
-  }
+      : user = null,
+        selectedVehicle = null;
 
   void setSelectedVehicle(Vehicle vehicle) {
-    this.vehicles = vehicles;
+    this.selectedVehicle = vehicle;
     notifyListeners();
   }
 

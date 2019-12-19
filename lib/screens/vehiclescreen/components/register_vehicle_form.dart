@@ -148,7 +148,6 @@ class _RegisterFormState extends State<RegisterForm> {
           vehicle, userModel.user.id, userModel.user.token);
 
       if (response.statusCode == 200) {
-        userModel.addVehicle(Vehicle.fromJson(jsonDecode(response.body)));
         success = true;
       }
     }

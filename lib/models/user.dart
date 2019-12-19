@@ -4,6 +4,7 @@ class User {
   String name;
   String email;
   String password;
+  int principalId;
   String token;
 
   User.token(this.token);

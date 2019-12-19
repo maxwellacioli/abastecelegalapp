@@ -7,6 +7,14 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final userModel = Provider.of<UserModel>(context);
 
+    String getLicensePlate() {
+      if(userModel.selectedVehicle != null) {
+        return userModel.selectedVehicle.licensePlate;
+      } else {
+        return '-';
+      }
+    }
+
     return new Container(
       color: Colors.white,
       child: new ListView(
@@ -139,7 +147,7 @@ class Body extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               new Text(
-                                'ABC1234',
+                                getLicensePlate(),
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 16.0,

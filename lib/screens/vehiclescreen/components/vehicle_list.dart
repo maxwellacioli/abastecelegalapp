@@ -10,7 +10,9 @@ class VehicleList extends StatefulWidget {
 }
 
 class _VehicleListState extends State<VehicleList> {
-  bool _loading = false;
+  List<Vehicle> vehicles = [];
+
+  bool _loading = true;
 
   int nextPage = 0;
 
@@ -30,7 +32,7 @@ class _VehicleListState extends State<VehicleList> {
       if (this.mounted) {
         setState(() {
           _loading = false;
-          userModel.vehicles.addAll(vehicles);
+          this.vehicles = List.from(this.vehicles)..addAll(vehicles);
           nextPage = nextPage + 1;
         });
       }
@@ -54,16 +56,15 @@ class _VehicleListState extends State<VehicleList> {
       child: new Center(
         child: new Opacity(
           opacity: _loading ? 1.0 : 0.0,
-          child: new CircularProgressIndicator(),
+          child: new CircularProgressIndicator(
+            backgroundColor: Colors.blue,
+          ),
         ),
       ),
     );
   }
 
   Widget _buildList() {
-    var userModel = Provider.of<UserModel>(context);
-    var vehicles = userModel.vehicles;
-
     return ListView.builder(
       itemCount: vehicles.length + 1,
       itemBuilder: (BuildContext context, int index) {
@@ -72,6 +73,9 @@ class _VehicleListState extends State<VehicleList> {
         } else {
           return GestureDetector(
             onTap: () {
+              var userModel = Provider.of<UserModel>(context);
+              userModel.setSelectedVehicle(vehicles[index]);
+              //TODO Set principal on database
               print(vehicles[index].id.toString());
             },
             child: Container(
