@@ -1,5 +1,5 @@
 import 'package:abastecelegalapp/models/vehicle.dart';
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +19,9 @@ class _VehicleListState extends State<VehicleList> {
   ScrollController _controller;
 
   _getData() async {
-    var userModel = Provider.of<UserModel>(context);
+    var userProv = Provider.of<UserProvider>(context);
     var vehicles = await VehicleService.getVehicles(
-        userModel.user.id, userModel.user.token, nextPage);
+        userProv.user.id, userProv.user.token, nextPage);
 
     if (this.mounted) {
       setState(() {
@@ -66,8 +66,8 @@ class _VehicleListState extends State<VehicleList> {
         } else {
           return GestureDetector(
             onTap: () {
-              var userModel = Provider.of<UserModel>(context);
-              userModel.setSelectedVehicle(vehicles[index]);
+              var userProv = Provider.of<UserProvider>(context);
+              userProv.setSelectedVehicle(vehicles[index]);
               //TODO Set principal on database
               print(vehicles[index].id.toString());
             },

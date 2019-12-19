@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:abastecelegalapp/models/login_data.dart';
 import 'package:abastecelegalapp/models/token_data.dart';
 import 'package:abastecelegalapp/models/user.dart';
-import 'package:abastecelegalapp/models/vehicle_list.dart';
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
 import 'package:abastecelegalapp/services/auth_api.dart';
-import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,8 +32,8 @@ class _LoginPageState extends State<LoginPage> {
   bool _loading = false;
 
   setToken(String token) {
-    var userModel = Provider.of<UserModel>(context);
-    userModel.setUser(User.token(token));
+    var userProv = Provider.of<UserProvider>(context);
+    userProv.setUser(User.token(token));
   }
 
   @override
@@ -111,15 +108,15 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         setToken(Token.fromJson(json.decode(response.body)).getToken());
 
-        var userModel = Provider.of<UserModel>(context);
-        var responseMe = await AuthAPI.me(userModel.user.token);
+        var userProv = Provider.of<UserProvider>(context);
+        var responseMe = await AuthAPI.me(userProv.user.token);
 
         if (responseMe.statusCode == 200) {
           User user = User.fromJson(json.decode(responseMe.body));
-          userModel.user.setId(user.id);
-          userModel.user.setEmail(user.email);
-          userModel.user.setUsername(user.username);
-          userModel.user.setName(user.name);
+          userProv.user.setId(user.id);
+          userProv.user.setEmail(user.email);
+          userProv.user.setUsername(user.username);
+          userProv.user.setName(user.name);
 
           success = true;
         }

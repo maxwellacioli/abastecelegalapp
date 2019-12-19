@@ -2,7 +2,7 @@ import 'package:abastecelegalapp/models/vehicle.dart';
 import 'package:flutter/material.dart';
 import 'package:abastecelegalapp/models/user.dart';
 
-class UserModel extends ChangeNotifier {
+class UserProvider extends ChangeNotifier {
   User user;
   Vehicle selectedVehicle;
 
@@ -11,7 +11,7 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  UserModel()
+  UserProvider()
       : user = null,
         selectedVehicle = null;
 

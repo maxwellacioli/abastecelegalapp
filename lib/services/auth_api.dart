@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:abastecelegalapp/models/login_data.dart';
 import 'package:abastecelegalapp/models/signup_data.dart';
 import 'package:abastecelegalapp/models/user.dart';
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:http/http.dart' as http;
 import 'package:abastecelegalapp/models/token_data.dart';
 import 'package:provider/provider.dart';

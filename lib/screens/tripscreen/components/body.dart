@@ -1,5 +1,5 @@
 import 'package:abastecelegalapp/models/user.dart';
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

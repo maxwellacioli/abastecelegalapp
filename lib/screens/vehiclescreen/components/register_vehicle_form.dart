@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/material.dart';
 import 'package:direct_select/direct_select.dart';
@@ -135,7 +135,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   Future<bool> _submit() async {
-    var userModel = Provider.of<UserModel>(context);
+    var userProv = Provider.of<UserProvider>(context);
 
     _formKey.currentState.save();
     bool success = false;
@@ -145,7 +145,7 @@ class _RegisterFormState extends State<RegisterForm> {
           _licensePlate.toUpperCase());
 
       var response = await VehicleService.register(
-          vehicle, userModel.user.id, userModel.user.token);
+          vehicle, userProv.user.id, userProv.user.token);
 
       if (response.statusCode == 200) {
         success = true;

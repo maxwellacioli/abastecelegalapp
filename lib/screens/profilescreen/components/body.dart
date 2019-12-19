@@ -1,15 +1,15 @@
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userModel = Provider.of<UserModel>(context);
+    final userProv = Provider.of<UserProvider>(context);
 
     String getLicensePlate() {
-      if(userModel.selectedVehicle != null) {
-        return userModel.selectedVehicle.licensePlate;
+      if(userProv.selectedVehicle != null) {
+        return userProv.selectedVehicle.licensePlate;
       } else {
         return '-';
       }
@@ -66,7 +66,7 @@ class Body extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 25.0),
                       child: new Text(
-                        userModel.user.username,
+                        userProv.user.username,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -95,7 +95,7 @@ class Body extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               new Text(
-                                userModel.user.name,
+                                userProv.user.name,
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 16.0,
@@ -121,7 +121,7 @@ class Body extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               new Text(
-                                userModel.user.email,
+                                userProv.user.email,
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 16.0,

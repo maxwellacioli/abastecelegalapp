@@ -1,4 +1,4 @@
-import 'package:abastecelegalapp/provs/user_model.dart';
+import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/screens/login/loginscreen.dart';
 import 'package:abastecelegalapp/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       MultiProvider(
-      providers: [ChangeNotifierProvider(builder: (context) => UserModel())],
+      providers: [ChangeNotifierProvider(builder: (context) => UserProvider())],
       child:
       MaterialApp(
         debugShowCheckedModeBanner: false,
