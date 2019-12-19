@@ -7,7 +7,8 @@ class TripPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TripListPage(),
+//      body: TripListPage(),
+      body: Container(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
