@@ -39,7 +39,7 @@ class Vehicle {
       case "CAMINHÃO":
         return "TRUCK";
       case "MOTO":
-        return "MOTO";
+        return "MOTORCYCLE";
       default:
         return null;
     }
@@ -53,7 +53,7 @@ class Vehicle {
         return "ÔNIBUS";
       case "TRUCK":
         return "CAMINHÃO";
-      case "MOTO":
+      case "MOTORCYCLE":
         return "MOTO";
       default:
         return null;
