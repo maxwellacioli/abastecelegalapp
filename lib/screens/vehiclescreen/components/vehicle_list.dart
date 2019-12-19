@@ -10,24 +10,20 @@ class VehicleList extends StatefulWidget {
 }
 
 class _VehicleListState extends State<VehicleList> {
-  List<Vehicle> vehicles = [];
-
   bool _loading = true;
-
-  int nextPage = 0;
 
   ScrollController _controller;
 
   _getData() async {
     var userProv = Provider.of<UserProvider>(context);
     var vehicles = await VehicleService.getVehicles(
-        userProv.user.id, userProv.user.token, nextPage);
+        userProv.user.id, userProv.user.token, userProv.nextPage);
 
     if (this.mounted) {
       setState(() {
         _loading = false;
-        this.vehicles = List.from(this.vehicles)..addAll(vehicles);
-        nextPage = nextPage + 1;
+        userProv.addVehicles(vehicles);
+        userProv.setNextPage(userProv.nextPage + 1);
       });
     }
   }
@@ -58,19 +54,20 @@ class _VehicleListState extends State<VehicleList> {
   }
 
   Widget _buildList() {
+    var userProv = Provider.of<UserProvider>(context);
+
     return ListView.builder(
-      itemCount: vehicles.length + 1,
+      itemCount: userProv.vehicles.length + 1,
       itemBuilder: (BuildContext context, int index) {
-        if (index == vehicles.length) {
+        if (index == userProv.vehicles.length) {
           return _buildProgressIndicator();
         } else {
-          var vehicle = vehicles[index];
-
+          var vehicle = userProv.vehicles[index];
 
           return new GestureDetector(
             onTap: () {
-              var userProv = Provider.of<UserProvider>(context);
-              userProv.setSelectedVehicle(vehicles[index]);
+
+              userProv.setSelectedVehicle(userProv.vehicles[index]);
               //TODO Set principal on database
               print(vehicle.id.toString());
             },
@@ -79,8 +76,8 @@ class _VehicleListState extends State<VehicleList> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   new Text("Tipo: " + vehicle.vehicleType,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20)),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   new Text("Modelo: " + vehicle.model,
                       style: TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 16)),
@@ -94,23 +91,6 @@ class _VehicleListState extends State<VehicleList> {
               ),
             ),
           );
-//          return GestureDetector(
-//            onTap: () {
-//              var userProv = Provider.of<UserProvider>(context);
-//              userProv.setSelectedVehicle(vehicles[index]);
-//              //TODO Set principal on database
-//              print(vehicles[index].id.toString());
-//            },
-//            child: Container(
-//              color: Colors.green,
-//              child: Center(
-//                child: Container(
-//                  padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-//                  child: Text(vehicles[index].licensePlate),
-//                ),
-//              ),
-//            ),
-//          );
         }
       },
       controller: _controller,

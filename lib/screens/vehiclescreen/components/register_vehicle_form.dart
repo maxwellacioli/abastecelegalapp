@@ -85,7 +85,7 @@ class _RegisterFormState extends State<RegisterForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(left: 10.0, bottom: 5.0),
             child: Text(
               "Tipo de Veículo",
               style: TextStyle(color: Colors.black),
@@ -148,6 +148,11 @@ class _RegisterFormState extends State<RegisterForm> {
           vehicle, userProv.user.id, userProv.user.token);
 
       if (response.statusCode == 200) {
+
+        var vehicle = Vehicle.fromJson(json.decode(response.body));
+
+        userProv.addVehicle(vehicle);
+
         success = true;
       }
     }

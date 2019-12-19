@@ -5,6 +5,13 @@ import 'package:abastecelegalapp/models/user.dart';
 class UserProvider extends ChangeNotifier {
   User user;
   Vehicle selectedVehicle;
+  List<Vehicle> vehicles;
+  int nextPage;
+
+  void setNextPage(int nextPage) {
+    this.nextPage = nextPage;
+    notifyListeners();
+  }
 
   void setVehiclePrincipalId(int id) {
     user.id = id;
@@ -12,8 +19,21 @@ class UserProvider extends ChangeNotifier {
   }
 
   UserProvider()
-      : user = null,
-        selectedVehicle = null;
+      :
+        nextPage = 0,
+        user = null,
+        selectedVehicle = null,
+        vehicles = [];
+
+  void addVehicle(Vehicle vehicle) {
+   this.vehicles.add(vehicle);
+   notifyListeners();
+  }
+
+  void addVehicles(List<Vehicle> vehicles) {
+    this.vehicles = List.from(this.vehicles)..addAll(vehicles);
+    notifyListeners();
+  }
 
   void setSelectedVehicle(Vehicle vehicle) {
     this.selectedVehicle = vehicle;
