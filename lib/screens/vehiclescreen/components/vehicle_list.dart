@@ -19,23 +19,16 @@ class _VehicleListState extends State<VehicleList> {
   ScrollController _controller;
 
   _getData() async {
-    if (this.mounted) {
-      if (!_loading) {
-        setState(() {
-          _loading = true;
-        });
-      }
-      var userModel = Provider.of<UserModel>(context);
-      var vehicles = await VehicleService.getVehicles(
-          userModel.user.id, userModel.user.token, nextPage);
+    var userModel = Provider.of<UserModel>(context);
+    var vehicles = await VehicleService.getVehicles(
+        userModel.user.id, userModel.user.token, nextPage);
 
-      if (this.mounted) {
-        setState(() {
-          _loading = false;
-          this.vehicles = List.from(this.vehicles)..addAll(vehicles);
-          nextPage = nextPage + 1;
-        });
-      }
+    if (this.mounted) {
+      setState(() {
+        _loading = false;
+        this.vehicles = List.from(this.vehicles)..addAll(vehicles);
+        nextPage = nextPage + 1;
+      });
     }
   }
 
