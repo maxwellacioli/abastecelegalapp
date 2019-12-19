@@ -141,8 +141,8 @@ class _RegisterFormState extends State<RegisterForm> {
     bool success = false;
 
     if (_formKey.currentState.validate()) {
-      var vehicle =
-          Vehicle(_vehicleTypes[_selectedVehicleType], _model, _licensePlate);
+      var vehicle = Vehicle(_vehicleTypes[_selectedVehicleType], _model,
+          _licensePlate.toUpperCase());
 
       var response = await VehicleService.register(
           vehicle, userModel.user.id, userModel.user.token);
