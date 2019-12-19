@@ -1,3 +1,4 @@
+import 'package:abastecelegalapp/models/trip.dart';
 import 'package:abastecelegalapp/models/vehicle.dart';
 import 'package:flutter/material.dart';
 import 'package:abastecelegalapp/models/user.dart';
@@ -6,6 +7,7 @@ class UserProvider extends ChangeNotifier {
   User user;
   Vehicle selectedVehicle;
   List<Vehicle> vehicles;
+  List<Trip> trips;
   int nextPage;
 
   void setNextPage(int nextPage) {
@@ -23,7 +25,8 @@ class UserProvider extends ChangeNotifier {
         nextPage = 0,
         user = null,
         selectedVehicle = null,
-        vehicles = [];
+        vehicles = [],
+        trips = [];
 
   void addVehicle(Vehicle vehicle) {
    this.vehicles.add(vehicle);

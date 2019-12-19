@@ -25,4 +25,15 @@ class Trip {
     };
   }
 
+  Trip.fromJson(Map<String, dynamic> json) :
+      this.id = json['id'],
+      this.date = json['date'],
+      this.tripDistance = json['tripDistance'],
+      this.fuelQuantity = json['fuelQuantity'],
+      this.fuelConsumption = json['fuelConsumption'],
+      this.fuelType = json['fuelType'],
+      this.city = json['city'],
+      this.description = json['description'];
+
+
 }
