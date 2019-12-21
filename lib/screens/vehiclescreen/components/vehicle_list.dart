@@ -15,6 +15,8 @@ class _VehicleListState extends State<VehicleList> {
 
   ScrollController _controller;
 
+  SlidableController _slidableController;
+
   _getData() async {
     var userProv = Provider.of<UserProvider>(context);
     var vehicles = await VehicleService.getVehicles(
@@ -32,11 +34,31 @@ class _VehicleListState extends State<VehicleList> {
   @override
   void initState() {
     super.initState();
+    _slidableController = SlidableController(
+      onSlideAnimationChanged: handleSlideAnimationChanged,
+      onSlideIsOpenChanged: handleSlideIsOpenChanged,
+    );
+
     _controller = ScrollController();
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         _getData();
       }
+    });
+  }
+
+  Animation<double> _rotationAnimation;
+  Color _fabColor = Colors.blue;
+
+  void handleSlideAnimationChanged(Animation<double> slideAnimation) {
+    setState(() {
+      _rotationAnimation = slideAnimation;
+    });
+  }
+
+  void handleSlideIsOpenChanged(bool isOpen) {
+    setState(() {
+      _fabColor = isOpen ? Colors.green : Colors.blue;
     });
   }
 
@@ -70,6 +92,7 @@ class _VehicleListState extends State<VehicleList> {
               children: <Widget>[
                 new Slidable(
                   key: ValueKey(index),
+                  controller: _slidableController,
                   actionPane: SlidableDrawerActionPane(),
                   actions: <Widget>[
                     IconSlideAction(
@@ -100,6 +123,7 @@ class _VehicleListState extends State<VehicleList> {
                       icon: Icons.delete,
                     ),
                   ],
+
                   child: Container(
                     child: Column(
                       children: <Widget>[
