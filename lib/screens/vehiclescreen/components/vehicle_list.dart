@@ -65,43 +65,62 @@ class _VehicleListState extends State<VehicleList> {
         } else {
           var vehicle = userProv.vehicles[index];
 
-          return new Slidable(
-            key: ValueKey(index),
-            actionPane: SlidableDrawerActionPane(),
-            actions: <Widget>[
-              IconSlideAction(
-                onTap: () async {
-                  var response =  await VehicleService.setSelectedVehicle(
-                      vehicle.id, userProv.user.token);
+          return Container(
+            child: Column(
+              children: <Widget>[
+                new Slidable(
+                  key: ValueKey(index),
+                  actionPane: SlidableDrawerActionPane(),
+                  actions: <Widget>[
+                    IconSlideAction(
+                      onTap: () async {
+                        var response = await VehicleService.setSelectedVehicle(
+                            vehicle.id, userProv.user.token);
 
-                  if(response.statusCode == 200) {
-                    userProv.setSelectedVehicle(vehicle);
-                    userProv.resetTripNextPage();
-                    userProv.resetTripList();
-                  }
-                },
-                caption: 'Favorito',
-                color: Colors.yellow,
-                icon: Icons.star_border,
-              ),
-            ],
-            secondaryActions: <Widget>[
-              IconSlideAction(
-                caption: 'Mais',
-                color: Colors.grey.shade200,
-                icon: Icons.more_horiz,
-              ),
-              IconSlideAction(
-                caption: 'Excluir',
-                color: Colors.red,
-                icon: Icons.delete,
-              ),
-            ],
-            dismissal: SlidableDismissal(
-              child: SlidableDrawerDismissal(),
-            ),
-            child: ListTile(
-              title: Text(vehicle.licensePlate),
+                        if (response.statusCode == 200) {
+                          userProv.setSelectedVehicle(vehicle);
+                          userProv.resetTripNextPage();
+                          userProv.resetTripList();
+                        }
+                      },
+                      caption: 'Favorito',
+                      color: Colors.yellow,
+                      icon: Icons.star_border,
+                    ),
+                  ],
+                  secondaryActions: <Widget>[
+                    IconSlideAction(
+                      caption: 'Mais',
+                      color: Colors.grey.shade200,
+                      icon: Icons.more_horiz,
+                    ),
+                    IconSlideAction(
+                      caption: 'Excluir',
+                      color: Colors.red,
+                      icon: Icons.delete,
+                    ),
+                  ],
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: Text(vehicle.model),
+                          subtitle: Text(vehicle.licensePlate),
+                          leading: Icon(
+                            Icons.directions_car
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 60.0, right: 60.0),
+                  child: Divider(
+                    color: Colors.grey,
+                  ),
+                )
+              ],
             ),
           );
         }
