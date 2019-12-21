@@ -7,6 +7,7 @@ import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/screens/homescreen/home_page.dart';
 import 'package:abastecelegalapp/screens/registerform/register_page.dart';
 import 'package:abastecelegalapp/services/auth_api.dart';
+import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -117,7 +118,12 @@ class _LoginPageState extends State<LoginPage> {
           userProv.user.setEmail(user.email);
           userProv.user.setUsername(user.username);
           userProv.user.setName(user.name);
-          userProv.user.setPrincipalId(user.id);
+          userProv.user.setPrincipalId(user.principalId);
+
+          var vehicle = await VehicleService.getPrincipalVehicle(
+              user.principalId, userProv.user.token);
+
+          userProv.setSelectedVehicle(vehicle);
 
           success = true;
         }
