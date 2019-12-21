@@ -8,10 +8,11 @@ class UserProvider extends ChangeNotifier {
   Vehicle selectedVehicle;
   List<Vehicle> vehicles;
   List<Trip> trips;
-  int nextPage;
+  int vehicleNextPage;
+  int tripNextPage;
 
-  void setNextPage(int nextPage) {
-    this.nextPage = nextPage;
+  void setVehicleNextPage(int nextPage) {
+    this.vehicleNextPage = nextPage;
     notifyListeners();
   }
 
@@ -20,9 +21,25 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setTripNextPage(int nextPage) {
+    this.tripNextPage = nextPage;
+    notifyListeners();
+  }
+
+  void resetTripList() {
+    this.trips = [];
+    notifyListeners();
+  }
+
+  void resetTripNextPage() {
+    this.tripNextPage = 0;
+    notifyListeners();
+  }
+
   UserProvider()
       :
-        nextPage = 0,
+        tripNextPage = 0,
+        vehicleNextPage = 0,
         user = null,
         selectedVehicle = null,
         vehicles = [],
@@ -35,6 +52,16 @@ class UserProvider extends ChangeNotifier {
 
   void addVehicles(List<Vehicle> vehicles) {
     this.vehicles = List.from(this.vehicles)..addAll(vehicles);
+    notifyListeners();
+  }
+
+  void addTrip(Trip trip) {
+    this.trips.add(trip);
+    notifyListeners();
+  }
+
+  void addTrips(List<Trip> trips) {
+    this.trips = List.from(this.trips)..addAll(trips);
     notifyListeners();
   }
 

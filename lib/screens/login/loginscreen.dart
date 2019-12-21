@@ -117,6 +117,7 @@ class _LoginPageState extends State<LoginPage> {
           userProv.user.setEmail(user.email);
           userProv.user.setUsername(user.username);
           userProv.user.setName(user.name);
+          userProv.user.setPrincipalId(user.id);
 
           success = true;
         }

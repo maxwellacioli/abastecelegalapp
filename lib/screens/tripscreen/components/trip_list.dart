@@ -16,13 +16,13 @@ class _TripListPageState extends State<TripListPage> {
   _getData() async {
     var userProv = Provider.of<UserProvider>(context);
     var trips = await TripService.getTrips(
-        userProv.selectedVehicle.id, userProv.user.token, userProv.nextPage);
+        userProv.selectedVehicle.id, userProv.user.token, userProv.tripNextPage);
 
     if (this.mounted) {
       setState(() {
         _loading = false;
-//        userProv.addVehicles(vehicles);
-//        userProv.setNextPage(userProv.nextPage + 1);
+        userProv.addTrips(trips);
+        userProv.setTripNextPage(userProv.tripNextPage + 1);
       });
     }
   }
@@ -73,16 +73,7 @@ class _TripListPageState extends State<TripListPage> {
                 children: <Widget>[
                   new Text("Id: " + trip.id.toString(),
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-//                  new Text("Modelo: " + vehicle.model,
-//                      style: TextStyle(
-//                          fontWeight: FontWeight.normal, fontSize: 16)),
-//                  new Text("Placa: " + vehicle.licensePlate,
-//                      style: TextStyle(
-//                          fontWeight: FontWeight.normal, fontSize: 16)),
-//                  new Text("Km: " + vehicle.currentTotalDistance.toString(),
-//                      style: TextStyle(
-//                          fontWeight: FontWeight.normal, fontSize: 16)),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 ],
               ),
             ),
@@ -93,13 +84,26 @@ class _TripListPageState extends State<TripListPage> {
     );
   }
 
+  Widget selectedCarNotDefined() {
+    return Center(
+      //TODO Definir um texto melhor
+      child: Text('Carro principal não definido.'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    _getData();
+    var userProv = Provider.of<UserProvider>(context);
+
+    if(userProv.selectedVehicle != null) {
+      _getData();
+    }
 
     return Scaffold(
       body: Container(
-        child: _buildList(),
+        child: userProv.selectedVehicle != null
+            ? _buildList()
+            : selectedCarNotDefined(),
       ),
       resizeToAvoidBottomPadding: false,
     );

@@ -25,6 +25,10 @@ class User {
     this.username = username;
   }
 
+  void setPrincipalId(int id) {
+    this.principalId = id;
+  }
+
   User(int id, String username, String name, String email, String password) {
     this.id = id;
     this.username = username;
@@ -38,7 +42,8 @@ class User {
       this.id = json['id'],
       this.username = json['username'],
       this.name = json['name'],
-      this.email = json['email'];
+      this.email = json['email'],
+      this.principalId = json['principalId'];
 
   Map toJson() {
     return {

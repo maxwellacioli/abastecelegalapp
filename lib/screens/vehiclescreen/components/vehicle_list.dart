@@ -17,13 +17,13 @@ class _VehicleListState extends State<VehicleList> {
   _getData() async {
     var userProv = Provider.of<UserProvider>(context);
     var vehicles = await VehicleService.getVehicles(
-        userProv.user.id, userProv.user.token, userProv.nextPage);
+        userProv.user.id, userProv.user.token, userProv.vehicleNextPage);
 
     if (this.mounted) {
       setState(() {
         _loading = false;
         userProv.addVehicles(vehicles);
-        userProv.setNextPage(userProv.nextPage + 1);
+        userProv.setVehicleNextPage(userProv.vehicleNextPage + 1);
       });
     }
   }
@@ -65,11 +65,15 @@ class _VehicleListState extends State<VehicleList> {
           var vehicle = userProv.vehicles[index];
 
           return new GestureDetector(
-            onTap: () {
+            onTap: () async {
+              var response =  await VehicleService.setSelectedVehicle(
+                  vehicle.id, userProv.user.token);
 
-              userProv.setSelectedVehicle(userProv.vehicles[index]);
-              //TODO Set principal on database
-              print(vehicle.id.toString());
+              if(response.statusCode == 200) {
+                userProv.setSelectedVehicle(vehicle);
+                userProv.resetTripNextPage();
+                userProv.resetTripList();
+              }
             },
             child: Card(
               child: new Column(
