@@ -141,7 +141,7 @@ class Body extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               new Text(
-                                'Veiculo Principal',
+                                'Veiculo Preferido',
                                 style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold),

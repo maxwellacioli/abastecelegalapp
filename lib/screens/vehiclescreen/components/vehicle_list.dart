@@ -3,6 +3,7 @@ import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class VehicleList extends StatefulWidget {
   @override
@@ -64,35 +65,43 @@ class _VehicleListState extends State<VehicleList> {
         } else {
           var vehicle = userProv.vehicles[index];
 
-          return new GestureDetector(
-            onTap: () async {
-              var response =  await VehicleService.setSelectedVehicle(
-                  vehicle.id, userProv.user.token);
+          return new Slidable(
+            key: ValueKey(index),
+            actionPane: SlidableDrawerActionPane(),
+            actions: <Widget>[
+              IconSlideAction(
+                onTap: () async {
+                  var response =  await VehicleService.setSelectedVehicle(
+                      vehicle.id, userProv.user.token);
 
-              if(response.statusCode == 200) {
-                userProv.setSelectedVehicle(vehicle);
-                userProv.resetTripNextPage();
-                userProv.resetTripList();
-              }
-            },
-            child: Card(
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Text("Tipo: " + vehicle.vehicleType,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                  new Text("Modelo: " + vehicle.model,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 16)),
-                  new Text("Placa: " + vehicle.licensePlate,
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 16)),
-                  new Text("Km: " + vehicle.totalDistance.toString(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 16)),
-                ],
+                  if(response.statusCode == 200) {
+                    userProv.setSelectedVehicle(vehicle);
+                    userProv.resetTripNextPage();
+                    userProv.resetTripList();
+                  }
+                },
+                caption: 'Favorito',
+                color: Colors.yellow,
+                icon: Icons.star_border,
               ),
+            ],
+            secondaryActions: <Widget>[
+              IconSlideAction(
+                caption: 'Mais',
+                color: Colors.grey.shade200,
+                icon: Icons.more_horiz,
+              ),
+              IconSlideAction(
+                caption: 'Excluir',
+                color: Colors.red,
+                icon: Icons.delete,
+              ),
+            ],
+            dismissal: SlidableDismissal(
+              child: SlidableDrawerDismissal(),
+            ),
+            child: ListTile(
+              title: Text(vehicle.licensePlate),
             ),
           );
         }
