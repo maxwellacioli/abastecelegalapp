@@ -88,7 +88,7 @@ class _VehicleListState extends State<VehicleList> {
                   new Text("Placa: " + vehicle.licensePlate,
                       style: TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 16)),
-                  new Text("Km: " + vehicle.currentTotalDistance.toString(),
+                  new Text("Km: " + vehicle.totalDistance.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 16)),
                 ],

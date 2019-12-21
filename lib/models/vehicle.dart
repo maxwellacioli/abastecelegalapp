@@ -5,13 +5,13 @@ class Vehicle {
   String vehicleType;
   String model;
   String licensePlate;
-  double currentTotalDistance;
+  double totalDistance;
 
   Vehicle(String vehicleType, String model, String licensePlate) {
     this.vehicleType = vehicleType;
     this.model = model;
     this.licensePlate = licensePlate;
-    this.currentTotalDistance = 0;
+    this.totalDistance = 0;
   }
 
   Vehicle.fromJson(Map json) :
@@ -19,14 +19,14 @@ class Vehicle {
         this.vehicleType = _vehicleTypeFromJson(json['vehicleType']),
         this.model = json['model'],
         this.licensePlate = json['licensePlate'],
-        this.currentTotalDistance = json['currentTotalDistance'];
+        this.totalDistance = json['totalDistance'];
 
   Map toJson() {
     return {
       'vehicleType' : _vehicleTypeToJson(vehicleType),
       'model' : model,
       'licensePlate' : licensePlate,
-      'currentTotalDistance' : currentTotalDistance
+      'totalDistance' : totalDistance
     };
   }
 
