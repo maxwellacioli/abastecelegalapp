@@ -152,13 +152,27 @@ class _VehicleListState extends State<VehicleList> {
     );
   }
 
+  Widget _buildPage() {
+    var userProv = Provider.of<UserProvider>(context);
+
+    if(userProv.vehicles.length == 0) {
+      return Center(
+        child: Text(
+          'Não há veículos cadastrados.'
+        ),
+      );
+    }
+
+    return _buildList();
+  }
+
   @override
   Widget build(BuildContext context) {
     _getData();
 
     return Scaffold(
       body: Container(
-        child: _buildList(),
+        child: _buildPage(),
       ),
       resizeToAvoidBottomPadding: false,
     );

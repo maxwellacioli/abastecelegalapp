@@ -118,12 +118,13 @@ class _LoginPageState extends State<LoginPage> {
           userProv.user.setEmail(user.email);
           userProv.user.setUsername(user.username);
           userProv.user.setName(user.name);
-          userProv.user.setPrincipalId(user.principalId);
 
-          var vehicle = await VehicleService.getPrincipalVehicle(
-              user.principalId, userProv.user.token);
-
-          userProv.setSelectedVehicle(vehicle);
+          if(user.principalId != null) {
+            userProv.user.setPrincipalId(user.principalId);
+            var vehicle = await VehicleService.getPrincipalVehicle(
+                user.principalId, userProv.user.token);
+            userProv.setSelectedVehicle(vehicle);
+          }
 
           success = true;
         }
