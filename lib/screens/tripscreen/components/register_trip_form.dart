@@ -170,9 +170,11 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
       var trip = Trip(_city[_selectedCity], _fuelQuantity, _tripDistance,
           _fuelType[_selectedFuelType]);
 
-      var response = await TripService.register(trip, 1, userProv.user.token);
+      var response = await TripService.register(
+          trip, userProv.selectedVehicle.id, userProv.user.token);
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        userProv.trips.add(trip);
         success = true;
       }
     }
