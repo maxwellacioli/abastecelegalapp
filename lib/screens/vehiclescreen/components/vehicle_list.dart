@@ -123,14 +123,18 @@ class _VehicleListState extends State<VehicleList> {
                       icon: Icons.delete,
                     ),
                   ],
-
-                  child: ListTile(
-                    title: Text(vehicle.model),
-                    subtitle: Text(vehicle.licensePlate),
-                    leading: Icon(
-                        Icons.directions_car
-                        , size: 35.0),
-                    isThreeLine: true,
+                  child: Container(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: ListTile(
+                        title: Text(vehicle.model),
+                        subtitle: Text(vehicle.licensePlate),
+                        leading: Icon(
+                            Icons.directions_car
+                            , size: 35.0),
+                        isThreeLine: true,
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
