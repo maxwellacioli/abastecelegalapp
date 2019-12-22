@@ -151,7 +151,10 @@ class _TripListPageState extends State<TripListPage> {
       if (userProv.trips.length == 0) {
         return emptyTrips();
       } else {
-        return _buildList();
+        if (userProv.selectedVehicle != null) {
+          _getData();
+        }
+        return  _buildList();
       }
     } else {
       return selectedCarNotDefined();
@@ -160,11 +163,6 @@ class _TripListPageState extends State<TripListPage> {
 
   @override
   Widget build(BuildContext context) {
-    var userProv = Provider.of<UserProvider>(context);
-
-    if (userProv.selectedVehicle != null) {
-      _getData();
-    }
 
     return Scaffold(
       body: Container(
