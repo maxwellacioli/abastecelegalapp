@@ -124,22 +124,17 @@ class _VehicleListState extends State<VehicleList> {
                     ),
                   ],
 
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        ListTile(
-                          title: Text(vehicle.model),
-                          subtitle: Text(vehicle.licensePlate),
-                          leading: Icon(
-                            Icons.directions_car
-                          ),
-                        ),
-                      ],
-                    ),
+                  child: ListTile(
+                    title: Text(vehicle.model),
+                    subtitle: Text(vehicle.licensePlate),
+                    leading: Icon(
+                        Icons.directions_car
+                        , size: 35.0),
+                    isThreeLine: true,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 60.0, right: 60.0),
+                  padding: EdgeInsets.only(left: 70.0),
                   child: Divider(
                     color: Colors.grey,
                   ),
