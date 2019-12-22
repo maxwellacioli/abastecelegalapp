@@ -1,5 +1,6 @@
 import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/services/trip_service.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,12 +12,14 @@ class TripListPage extends StatefulWidget {
 class _TripListPageState extends State<TripListPage> {
   bool _loading = true;
 
+  SlidableController _slidableController;
+
   ScrollController _controller;
 
   _getData() async {
     var userProv = Provider.of<UserProvider>(context);
-    var trips = await TripService.getTrips(
-        userProv.selectedVehicle.id, userProv.user.token, userProv.tripNextPage);
+    var trips = await TripService.getTrips(userProv.selectedVehicle.id,
+        userProv.user.token, userProv.tripNextPage);
 
     if (this.mounted) {
       setState(() {
@@ -27,9 +30,29 @@ class _TripListPageState extends State<TripListPage> {
     }
   }
 
+  Animation<double> _rotationAnimation;
+  Color _fabColor = Colors.blue;
+
+  void handleSlideAnimationChanged(Animation<double> slideAnimation) {
+    setState(() {
+      _rotationAnimation = slideAnimation;
+    });
+  }
+
+  void handleSlideIsOpenChanged(bool isOpen) {
+    setState(() {
+      _fabColor = isOpen ? Colors.green : Colors.blue;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _slidableController = SlidableController(
+      onSlideAnimationChanged: handleSlideAnimationChanged,
+      onSlideIsOpenChanged: handleSlideIsOpenChanged,
+    );
+
     _controller = ScrollController();
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
@@ -63,19 +86,44 @@ class _TripListPageState extends State<TripListPage> {
         } else {
           var trip = userProv.trips[index];
 
-          return new GestureDetector(
-            onTap: () {
-              print(trip.id.toString());
-            },
-            child: Card(
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new Text("Id: " + trip.id.toString(),
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                ],
-              ),
+          return Container(
+            child: Column(
+              children: <Widget>[
+                new Slidable(
+                  key: ValueKey(index),
+                  controller: _slidableController,
+                  actionPane: SlidableDrawerActionPane(),
+                  secondaryActions: <Widget>[
+                    IconSlideAction(
+                      caption: 'Mais',
+                      color: Colors.grey.shade200,
+                      icon: Icons.more_horiz,
+                    ),
+                    IconSlideAction(
+                      caption: 'Excluir',
+                      color: Colors.red,
+                      icon: Icons.delete,
+                    ),
+                  ],
+                  child: Container(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                      child: ListTile(
+                        title: Text(trip.city),
+                        subtitle: Text(trip.fuelType),
+                        leading: Icon(Icons.local_gas_station, size: 35.0),
+                        isThreeLine: true,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 70.0),
+                  child: Divider(
+                    color: Colors.grey,
+                  ),
+                )
+              ],
             ),
           );
         }
@@ -84,26 +132,43 @@ class _TripListPageState extends State<TripListPage> {
     );
   }
 
+  Widget emptyTrips() {
+    return Center(
+      child: Text('Não abastecimentos cadastrados.'),
+    );
+  }
+
   Widget selectedCarNotDefined() {
     return Center(
-      //TODO Definir um texto melhor
-      child: Text('Carro principal não definido.'),
+      child: Text('Não há um veículo preferido definido.'),
     );
+  }
+
+  Widget buildPage() {
+    var userProv = Provider.of<UserProvider>(context);
+
+    if (userProv.selectedVehicle != null) {
+      if (userProv.trips.length == 0) {
+        return emptyTrips();
+      } else {
+        return _buildList();
+      }
+    } else {
+      return selectedCarNotDefined();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var userProv = Provider.of<UserProvider>(context);
 
-    if(userProv.selectedVehicle != null) {
+    if (userProv.selectedVehicle != null) {
       _getData();
     }
 
     return Scaffold(
       body: Container(
-        child: userProv.selectedVehicle != null
-            ? _buildList()
-            : selectedCarNotDefined(),
+        child: buildPage(),
       ),
       resizeToAvoidBottomPadding: false,
     );
