@@ -162,12 +162,13 @@ class _VehicleListState extends State<VehicleList> {
         ),
       );
     }
-
+    
     return _buildList();
   }
 
   @override
   Widget build(BuildContext context) {
+
     _getData();
 
     return Scaffold(
