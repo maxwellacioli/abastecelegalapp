@@ -3,6 +3,7 @@ import 'package:abastecelegalapp/provs/user_prov.dart';
 import 'package:abastecelegalapp/services/trip_service.dart';
 import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class RegisterTripForm extends StatefulWidget {
@@ -72,6 +73,8 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
                     child: MaterialButton(
                       minWidth: 200.0,
                       onPressed: () async {
+                        SystemChannels.textInput.invokeMethod('TextInput.hide');
+
                         setState(() {
                           _loading = true;
                         });

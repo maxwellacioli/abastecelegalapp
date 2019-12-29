@@ -2,6 +2,7 @@ import 'package:abastecelegalapp/models/signup_data.dart';
 import 'package:abastecelegalapp/services/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:abastecelegalapp/screens/login/loginscreen.dart';
+import 'package:flutter/services.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key key}) : super(key: key);
@@ -50,6 +51,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       child: MaterialButton(
                         minWidth: 200.0,
                         onPressed: () async {
+                          SystemChannels.textInput.invokeMethod('TextInput.hide');
+
                           setState(() {
                             _loading = true;
                           });

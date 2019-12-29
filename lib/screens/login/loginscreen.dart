@@ -10,6 +10,7 @@ import 'package:abastecelegalapp/services/auth_api.dart';
 import 'package:abastecelegalapp/services/veihicle_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -147,6 +148,8 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () async {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
+
           _formKey.currentState.save();
 
           if (_formKey.currentState.validate()) {
