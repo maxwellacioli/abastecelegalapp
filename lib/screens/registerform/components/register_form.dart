@@ -45,7 +45,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   children: <Widget>[
                     Material(
                       elevation: 5.0,
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(10.0),
                       color: Colors.blue,
                       child: MaterialButton(
                         minWidth: 200.0,
