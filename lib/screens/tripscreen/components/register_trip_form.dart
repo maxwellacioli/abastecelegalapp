@@ -26,6 +26,8 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
   double _fuelQuantity;
   double _tripDistance;
 
+  bool _loading = false;
+
   List<Widget> _buildFuelType() {
     return _fuelType
         .map((val) => MySelectionItem(
@@ -40,6 +42,14 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
               title: val,
             ))
         .toList();
+  }
+
+  Widget loadingData() {
+    return Center(
+      child: new CircularProgressIndicator(
+        backgroundColor: Colors.blue,
+      ),
+    );
   }
 
   Widget registerButton() {
@@ -62,6 +72,10 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
                     child: MaterialButton(
                       minWidth: 200.0,
                       onPressed: () async {
+                        setState(() {
+                          _loading = true;
+                        });
+
                         bool success = await _submit();
                         if (success) {
                           Navigator.pop(context);
@@ -154,7 +168,7 @@ class _RegisterTripFormState extends State<RegisterTripForm> {
             },
           ),
           const SizedBox(height: 40.0),
-          registerButton(),
+          _loading ? loadingData() : registerButton(),
         ],
       ),
     );

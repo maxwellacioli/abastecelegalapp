@@ -28,12 +28,22 @@ class _RegisterFormState extends State<RegisterForm> {
   String _model;
   String _licensePlate;
 
+  bool _loading = false;
+
   List<Widget> _buildVehicleType() {
     return _vehicleTypes
         .map((val) => MySelectionItem(
               title: val,
             ))
         .toList();
+  }
+
+  Widget loadingData() {
+    return Center(
+      child: new CircularProgressIndicator(
+        backgroundColor: Colors.blue,
+      ),
+    );
   }
 
   Widget registerButton() {
@@ -56,6 +66,10 @@ class _RegisterFormState extends State<RegisterForm> {
                     child: MaterialButton(
                       minWidth: 200.0,
                       onPressed: () async {
+                        setState(() {
+                          _loading = true;
+                        });
+
                         bool success = await _submit();
                         if (success) {
                           Navigator.pop(context);
@@ -128,7 +142,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           const SizedBox(height: 40.0),
-          registerButton(),
+          _loading ? loadingData() : registerButton(),
         ],
       ),
     );

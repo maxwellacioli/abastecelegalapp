@@ -19,6 +19,16 @@ class _RegisterFormState extends State<RegisterForm> {
   String _username;
   String _password;
 
+  bool _loading = false;
+
+  Widget loadingData() {
+    return Center(
+      child: new CircularProgressIndicator(
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
   Widget signUpButton () {
 
     return Container(
@@ -40,6 +50,10 @@ class _RegisterFormState extends State<RegisterForm> {
                       child: MaterialButton(
                         minWidth: 200.0,
                         onPressed: () async {
+                          setState(() {
+                            _loading = true;
+                          });
+
                           bool success = await _submit();
                           if(success) {
                             Navigator.pop(context);
@@ -114,7 +128,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           const SizedBox(height: 40.0),
-          signUpButton(),
+          _loading ? loadingData() : signUpButton(),
         ],
       ),
     );

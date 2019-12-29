@@ -18,7 +18,7 @@ class _VehicleListState extends State<VehicleList> {
   SlidableController _slidableController;
 
   _getData() async {
-    var userProv = Provider.of<UserProvider>(context);
+    var userProv = Provider.of<UserProvider>(context, listen: false);
     var vehicles = await VehicleService.getVehicles(
         userProv.user.id, userProv.user.token, userProv.vehicleNextPage);
 
@@ -45,6 +45,8 @@ class _VehicleListState extends State<VehicleList> {
         _getData();
       }
     });
+
+    _getData();
   }
 
   Animation<double> _rotationAnimation;
@@ -168,8 +170,6 @@ class _VehicleListState extends State<VehicleList> {
 
   @override
   Widget build(BuildContext context) {
-
-    _getData();
 
     return Scaffold(
       body: Container(
