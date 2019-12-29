@@ -18,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
         title: const Text('Cadastrar Usuário'),
         centerTitle: true,
         elevation: 0.0,
+        brightness: Brightness.light,
       ),
       body: const SingleChildScrollView(
         child: Padding(

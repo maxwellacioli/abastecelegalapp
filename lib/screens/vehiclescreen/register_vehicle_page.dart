@@ -18,6 +18,7 @@ class _VehicleRegisterPageState extends State<VehicleRegisterPage> {
         title: const Text('Cadastrar Veículo'),
         centerTitle: true,
         elevation: 0.0,
+        brightness: Brightness.light,
       ),
       body: const SingleChildScrollView(
         child: Padding(

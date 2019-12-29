@@ -192,6 +192,7 @@ class _LoginPageState extends State<LoginPage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
         centerTitle: true,
+        brightness: Brightness.light,
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it

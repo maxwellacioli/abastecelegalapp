@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'components/register_trip_form.dart';
 
 class TripRegisterPage extends StatefulWidget {
@@ -15,6 +14,7 @@ class _TripRegisterPageState extends State<TripRegisterPage> {
         title: const Text('Cadastrar Abastecimento'),
         centerTitle: true,
         elevation: 0.0,
+        brightness: Brightness.light,
       ),
       body: const SingleChildScrollView(
         child: Padding(
