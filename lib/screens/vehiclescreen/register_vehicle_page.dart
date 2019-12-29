@@ -15,10 +15,12 @@ class _VehicleRegisterPageState extends State<VehicleRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastrar Veículo'),
+        title: const Text('Cadastrar Veículo',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
         elevation: 0.0,
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
+        backgroundColor: Colors.blue,
       ),
       body: const SingleChildScrollView(
         child: Padding(

@@ -11,10 +11,12 @@ class _TripRegisterPageState extends State<TripRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastrar Abastecimento'),
+        title: const Text('Cadastrar Abastecimento',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
         elevation: 0.0,
         brightness: Brightness.light,
+        backgroundColor: Colors.blue,
       ),
       body: const SingleChildScrollView(
         child: Padding(

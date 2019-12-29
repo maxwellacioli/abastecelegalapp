@@ -15,10 +15,12 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastrar Usuário'),
+        title: const Text('Cadastrar Usuário',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
         elevation: 0.0,
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
+        backgroundColor: Colors.blue,
       ),
       body: const SingleChildScrollView(
         child: Padding(
