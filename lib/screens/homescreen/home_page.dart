@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
+        brightness: Brightness.light,
       ),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
