@@ -119,12 +119,18 @@ class _LoginPageState extends State<LoginPage> {
           userProv.user.setUsername(user.username);
           userProv.user.setName(user.name);
 
-          if(user.principalId != null) {
+          if (user.principalId != null) {
             userProv.user.setPrincipalId(user.principalId);
             var vehicle = await VehicleService.getPrincipalVehicle(
                 user.principalId, userProv.user.token);
             userProv.setSelectedVehicle(vehicle);
           }
+
+          //Getting vehicle list
+          var vehicles = await VehicleService.getVehicles(
+              userProv.user.id, userProv.user.token, userProv.vehicleNextPage);
+          userProv.addVehicles(vehicles);
+          userProv.setVehicleNextPage(userProv.vehicleNextPage + 1);
 
           success = true;
         }

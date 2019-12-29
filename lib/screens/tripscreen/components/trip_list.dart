@@ -10,6 +10,7 @@ class TripListPage extends StatefulWidget {
 }
 
 class _TripListPageState extends State<TripListPage> {
+  bool _load = true;
   bool _loading = true;
 
   SlidableController _slidableController;
@@ -17,12 +18,13 @@ class _TripListPageState extends State<TripListPage> {
   ScrollController _controller;
 
   _getData() async {
-    var userProv = Provider.of<UserProvider>(context);
+    var userProv = Provider.of<UserProvider>(context, listen: false);
     var trips = await TripService.getTrips(userProv.selectedVehicle.id,
         userProv.user.token, userProv.tripNextPage);
 
     if (this.mounted) {
       setState(() {
+        _load = false;
         _loading = false;
         userProv.addTrips(trips);
         userProv.setTripNextPage(userProv.tripNextPage + 1);
@@ -59,6 +61,8 @@ class _TripListPageState extends State<TripListPage> {
         _getData();
       }
     });
+
+    _getData();
   }
 
   Widget _buildProgressIndicator() {
@@ -132,6 +136,14 @@ class _TripListPageState extends State<TripListPage> {
     );
   }
 
+  Widget loadingData() {
+    return Center(
+      child: new CircularProgressIndicator(
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
   Widget emptyTrips() {
     return Center(
       child: Text('Não abastecimentos cadastrados.'),
@@ -154,7 +166,7 @@ class _TripListPageState extends State<TripListPage> {
         if (userProv.selectedVehicle != null) {
           _getData();
         }
-        return  _buildList();
+        return _buildList();
       }
     } else {
       return selectedCarNotDefined();
@@ -166,7 +178,7 @@ class _TripListPageState extends State<TripListPage> {
 
     return Scaffold(
       body: Container(
-        child: buildPage(),
+        child: _load ? loadingData() : buildPage(),
       ),
       resizeToAvoidBottomPadding: false,
     );
