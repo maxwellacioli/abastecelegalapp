@@ -27,7 +27,7 @@ class Trip {
 
   Trip.fromJson(Map<String, dynamic> json) :
       this.id = json['id'],
-//      this.date = json['date'],
+      this.date = DateTime.parse(json['date']),
       this.tripDistance = json['tripDistance'],
       this.fuelQuantity = json['fuelQuantity'],
       this.fuelConsumption = json['fuelConsumption'],
